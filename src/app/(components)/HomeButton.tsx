@@ -1,9 +1,17 @@
 import Link from "next/link"
+import Image from "next/image"
 export default function HomeButton() {
     return (
-        <div className="absolute left-5 top-1">
+        <div className="absolute left-1 top-2 scale-50">
         <Link href="/">
-            <div className="bg-red-600 rounded-md p-2 text-white mt-4">Home</div>
+            
+            <Image
+            src={"/home.png"}
+            height={50}
+            width={50}
+            className="invert"
+            alt="Home"
+            />
         </Link>
         </div>
     )
