@@ -46,7 +46,7 @@ export default function Home() {
                 >
                     <h1 className="text-xl font-semibold text-white z-10">Enter the amount below ...</h1>
                     <div className="relative flex justify-center items-center">
-                        <div className=" bg-white antialiased text-center text-4xl border p-2 rounded-l-md text-black shadow-blue-600/20 shadow-md z-10">$</div>
+                        <div className=" bg-white antialiased text-center text-4xl border p-2 rounded-l-md text-black shadow-blue-600/20 shadow-md z-10 px-4">$</div>
                         <input
                             id="amount"
                             type="number"
