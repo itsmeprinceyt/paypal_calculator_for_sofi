@@ -2,17 +2,17 @@
 import { useState } from "react";
 import { calculateFeeAndRecipientAmount } from "@/utils/calculateFee";
 import HomeButton from "../(components)/HomeButton";
-import Image from "next/image";
 
 export default function Home() {
-    const [inputAmount, setInputAmount] = useState<number>(100); // Default value is 100
+    const [inputAmount, setInputAmount] = useState<number>(100);
     const [result, setResult] = useState<{ fee: number; recipientAmount: number; paymentToReceive: number } | null>(null);
-    const [isInputDisabled, setIsInputDisabled] = useState<boolean>(false); // New state to manage input disabled status
+    const [isInputDisabled, setIsInputDisabled] = useState<boolean>(false);
+    const [isFlipped, setIsFlipped] = useState(false);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.valueAsNumber;
         if (value >= 0 || event.target.value === "") {
-            setInputAmount(value || 0); // Set to 0 if input is empty
+            setInputAmount(value || 0);
         }
     };
 
@@ -21,30 +21,32 @@ export default function Home() {
         if (amountToCalculate >= 0) {
             const calculation = calculateFeeAndRecipientAmount(amountToCalculate);
             setResult(calculation);
-            setIsInputDisabled(true); // Disable input after calculation
+            setIsInputDisabled(true);
+            setIsFlipped(true);
         }
     };
 
     const handleRestart = () => {
-        setInputAmount(100); // Reset to the default amount (100)
-        setResult(null); // Clear the result
-        setIsInputDisabled(false); // Enable the input field again
+        setInputAmount(100);
+        setResult(null);
+        setIsInputDisabled(false);
+        setIsFlipped(false);
     };
 
     return (
         <div className="h-screen flex flex-col justify-center items-center text-white">
             <HomeButton />
-            <div> {/* First Card */}
-                <h1 className="text-xl font-semibold mb-4">Enter the amount below ...</h1>
-                <div className="bg-gradient-to-r from-blue-800 to-blue-600 rounded-md p-5">
+            <div className={`relative w-[600px] h-96 transition-transform duration-500 ${isFlipped ? "rotate-y-180" : ""}`} style={{ perspective: "1000px", transformStyle: "preserve-3d", }}>
+                {/* Front Side */}
+                <div
+                    className="absolute w-full h-full bg-gradient-to-r from-blue-900 to-blue-600 rounded-2xl shadow-blue-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-5"
+                    style={{
+                        backfaceVisibility: "hidden",
+                    }}
+                >
+                    <h1 className="text-xl font-semibold text-white z-10">Enter the amount below ...</h1>
                     <div className="relative flex justify-center items-center">
-                        <Image
-                            src={"/dollar.gif"}
-                            height={25}
-                            width={25}
-                            alt="Dollar GIF"
-                            className="absolute left-2"
-                        />
+                        <div className=" bg-white antialiased text-center text-4xl border p-2 rounded-l-md text-black shadow-blue-600/20 shadow-md z-10">$</div>
                         <input
                             id="amount"
                             type="number"
@@ -53,35 +55,52 @@ export default function Home() {
                             value={inputAmount}
                             onChange={handleInputChange}
                             placeholder="Enter amount"
-                            className={`pl-10 border p-2 rounded text-black w-full ${isInputDisabled ? 'bg-white cursor-not-allowed' : ''}`}
+                            className={`z-10 shadow-blue-600/20 shadow-md antialiased text-center text-4xl border p-2 rounded-r-md text-black w-full focus:outline-none ${isInputDisabled ? "bg-white cursor-not-allowed" : ""
+                                }`}
                             disabled={isInputDisabled}
                         />
                     </div>
                     <div className="">
                         <button
                             onClick={handleCalculate}
-                            className="bg-blue-600 text-white px-4 py-2 rounded mb-4"
+                            className="z-10 bg-white rounded-md px-5 h-[50px] text-blue-950 shadow-blue-600/30 hover:shadow-blue-600/50 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
                         >
-                            If sending this...
-                        </button>
-                        <button
-                            onClick={handleRestart}
-                            className="bg-gray-600 text-white px-4 py-2 rounded mt-4"
-                        >
-                            Restart
+                            If sending this . . .
                         </button>
                     </div>
                 </div>
-            </div>
-            <div>
-                {result && (
-                    <div className="text-center border p-4 rounded bg-gray-800">
-                        <p><strong>Entered Amount:</strong> ${inputAmount}</p>
-                        <p><strong>Fee:</strong> ${result.fee}</p>
-                        <p><strong>Amount to be Received After Fee Deduction:</strong> ${result.recipientAmount}</p>
-                        <p><strong>To Receive ${inputAmount}, You Need to Ask For:</strong> ${result.paymentToReceive}</p>
-                    </div>
-                )}
+
+                {/* Back Side */}
+                <div
+                    className="absolute w-full h-full bg-gradient-to-r from-blue-600 to-blue-900 rounded-2xl shadow-blue-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-5"
+                    style={{
+                        backfaceVisibility: "hidden",
+                        transform: "rotateY(180deg)",
+                    }}
+                >
+                    {result && (
+                        <div className="flex gap-3 w-[400px] text-white">
+                            <div className="text-right text-xl flex flex-col gap-5">
+                                <p >Entered Amount:</p>
+                                <p>Fee:</p>
+                                <p>Amount After Fee Deduction:</p>
+                                <p>To Receive ${inputAmount}, Ask For:</p>
+                            </div>
+                            <div className="text-left text-lg font-bold flex flex-col gap-5">
+                                <p>${inputAmount}</p>
+                                <p>${result.fee}</p>
+                                <p>${result.recipientAmount}</p>
+                                <p>${result.paymentToReceive}</p>
+                            </div>
+                        </div>
+                    )}
+                    <button
+                        onClick={handleRestart}
+                        className="bg-white rounded-md px-5 h-[50px] text-blue-950 shadow-blue-600/30 hover:shadow-blue-600/50 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
+                    >
+                        Restart
+                    </button>
+                </div>
             </div>
         </div>
     );

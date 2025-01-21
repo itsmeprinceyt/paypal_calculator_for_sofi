@@ -48,8 +48,7 @@ export default function SofiWist() {
             <input
                 id="wistAmount"
                 type="number"
-                min="0"
-                step="0.01"
+                min="1"
                 value={wistAmount}
                 onChange={handleWistAmountChange}
                 placeholder="Enter Wist Amount"
