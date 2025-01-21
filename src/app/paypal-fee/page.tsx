@@ -33,42 +33,44 @@ export default function Home() {
 
     return (
         <div className="h-screen flex flex-col justify-center items-center text-white">
-            <HomeButton/>
-            <h1 className="text-xl font-semibold mb-4">Enter the amount below ...</h1>
-            <div className="bg-gradient-to-r from-blue-800 to-blue-600 rounded-md p-5 ">
-                <div className="relative flex justify-center items-center">
-                <Image
-                src={"/dollar.gif"}
-                height={25}
-                width={25}
-                alt="Dollar GIF"
-                className="absolute left-2"
-                />
-                <input
-                    id="amount"
-                    type="number"
-                    min="0"
-                    step="0.01"
-                    value={inputAmount}
-                    onChange={handleInputChange}
-                    placeholder="Enter amount"
-                    className={`pl-10 border p-2 rounded text-black w-full ${isInputDisabled ? 'bg-white cursor-not-allowed' : ''}`}
-                    disabled={isInputDisabled} 
-                />
-                </div>
-                <div className="">
-                    <button
-                        onClick={handleCalculate}
-                        className="bg-blue-600 text-white px-4 py-2 rounded mb-4"
-                    >
-                        If sending this...
-                    </button>
-                    <button
-                        onClick={handleRestart}
-                        className="bg-gray-600 text-white px-4 py-2 rounded mt-4"
-                    >
-                        Restart
-                    </button>
+            <HomeButton />
+            <div> {/* First Card */}
+                <h1 className="text-xl font-semibold mb-4">Enter the amount below ...</h1>
+                <div className="bg-gradient-to-r from-blue-800 to-blue-600 rounded-md p-5">
+                    <div className="relative flex justify-center items-center">
+                        <Image
+                            src={"/dollar.gif"}
+                            height={25}
+                            width={25}
+                            alt="Dollar GIF"
+                            className="absolute left-2"
+                        />
+                        <input
+                            id="amount"
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            value={inputAmount}
+                            onChange={handleInputChange}
+                            placeholder="Enter amount"
+                            className={`pl-10 border p-2 rounded text-black w-full ${isInputDisabled ? 'bg-white cursor-not-allowed' : ''}`}
+                            disabled={isInputDisabled}
+                        />
+                    </div>
+                    <div className="">
+                        <button
+                            onClick={handleCalculate}
+                            className="bg-blue-600 text-white px-4 py-2 rounded mb-4"
+                        >
+                            If sending this...
+                        </button>
+                        <button
+                            onClick={handleRestart}
+                            className="bg-gray-600 text-white px-4 py-2 rounded mt-4"
+                        >
+                            Restart
+                        </button>
+                    </div>
                 </div>
             </div>
             <div>
