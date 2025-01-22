@@ -129,7 +129,7 @@ export default function Home() {
       <div ref={ThirdPage} className="relative h-screen flex justify-center items-center">
         <div className="flex flex-col justify-center items-center gap-3">
           <div className="text-center flex flex-col gap-2">
-            <div className="p-3 text-2xl text-white font-extralight w-[400px] sm:w-[600px] border-b border-white/30">This website is intended solely for educational purposes. I do not support or encourage cross-trading in Sofi, as it is against the rules. Any actions you take within Sofi, including cross-trading or related activities, are your responsibility. I am not accountable for any outcomes or issues that may arise from engaging in this playstyle.</div>
+            <div className="p-3 text-2xl text-white font-extralight w-[400px] sm:w-[600px] border-b border-white/30">This website is intended solely for educational purposes. I do not support or encourage cross-trading in Sofi or Karuta, as it is against the rules. Any actions you take within Sofi or Karuta, including cross-trading or related activities, are your responsibility. I am not accountable for any outcomes or issues that may arise from engaging in this playstyle. Please note that all transactions and outcomes are your responsibility.</div>
             <div className="text-white font-extralight">Discord Servers you can join!!</div>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-5 sm:gap-10">
