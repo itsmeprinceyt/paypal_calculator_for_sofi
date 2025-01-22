@@ -53,8 +53,9 @@ export default function Home() {
                   width={50}
                   alt="PayPal Gif"
                 />
-                PayPal Fee
-
+                <div className="ml-1">
+                  PayPal Fee
+                </div>
               </div>
             </Link>
             <Link
@@ -68,7 +69,9 @@ export default function Home() {
                   alt="Sofi Wist Gif"
                   className="rounded-lg"
                 />
-                Sofi Wists
+                <div className="ml-2">
+                  Sofi Wists
+                </div>
               </div>
             </Link>
             <Link
@@ -82,7 +85,8 @@ export default function Home() {
                   alt="Karuta Logo"
                   className="rounded-lg"
                 />
-                Karuta Tickets
+                <div className="ml-3">Karuta Tickets</div>
+                
               </div>
             </Link>
             <Link
@@ -96,7 +100,8 @@ export default function Home() {
                   alt="Mazoku Logo"
                   className="rounded-lg"
                 />
-                Mazoku Bloodstones
+                <div className="ml-3">Mazoku Bloodstones</div>
+                
               </div>
             </Link>
           </div>
@@ -259,8 +264,8 @@ export default function Home() {
         </div>
 
         <div className="absolute left-1/2 bottom-[30px] transform -translate-x-1/2 animate-pulse hover:animate-none hover:scale-110 transition-all duration-300 ease-in-out ">
-          <button onClick={ScrollToHome} 
-          className="button-3d w-[50px] h-[50px] hover:h-[40px] rounded-full border-none font-semibold flex items-center justify-center cursor-pointer duration-300 overflow-hidden relative hover:w-[140px] hover:rounded-full hover:items-center hover:bg-white hover:text-black "
+          <button onClick={ScrollToHome}
+            className="button-3d w-[50px] h-[50px] hover:h-[40px] rounded-full border-none font-semibold flex items-center justify-center cursor-pointer duration-300 overflow-hidden relative hover:w-[140px] hover:rounded-full hover:items-center hover:bg-white hover:text-black "
           >
             <Image
               className="arrow-tooltip duration-300"
