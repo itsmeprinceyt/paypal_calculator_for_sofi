@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import HomeButton from "../(components)/HomeButton";
 
-export default function SofiWist() {
+export default function SofiWistINR() {
     const [wistAmount, setWistAmount] = useState<number>(300);
     const [ratio, setRatio] = useState<number>(2.7);
     const [inrAmount, setInrAmount] = useState<number>(0);

@@ -42,45 +42,61 @@ export default function Home() {
             <div className="sm:text-8xl text-6xl text-white font-semibold">Welcome!</div>
             <div className="text-white font-extralight w-[300px] sm:w-[500px]">Effortless Fee Calculations for PayPal, Sofi Wists and Karuta Tickets!!</div>
           </div>
-          <div className="flex flex-col sm:flex-row gap-5 sm:gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-5">
             <Link
               href={"/paypal-fee"}
             >
-              <div className="bg-blue-200 rounded-md px-3 h-[50px] text-blue-950 shadow-blue-600/30 hover:shadow-blue-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-center items-center">
+              <div className="bg-gradient-to-r from-blue-300 to-blue-400 rounded-md px-1 h-[50px] text-blue-950 shadow-blue-600/30 hover:shadow-blue-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-start items-center gap-2">
                 <Image
                   src={"/Paypal.gif"}
                   height={50}
                   width={50}
                   alt="PayPal Gif"
                 />
-                PayPal Fee Calculator
+                PayPal Fee
 
               </div>
             </Link>
             <Link
               href={"/sofi-wist"}
             >
-              <div className="bg-pink-200 rounded-md px-3 h-[50px] text-pink-950 shadow-pink-600/30 hover:shadow-pink-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-center items-center">
+              <div className="bg-gradient-to-r from-pink-300 to-pink-400 rounded-md px-3 h-[50px] text-pink-950 shadow-pink-600/30 hover:shadow-pink-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-start items-center gap-2">
                 <Image
-                  src={"/wist_gif.gif"}
+                  src={"/sofi-icon.gif"}
                   height={40}
                   width={40}
                   alt="Sofi Wist Gif"
+                  className="rounded-lg"
                 />
-                Sofi Wists Calculator
+                Sofi Wists
               </div>
             </Link>
             <Link
               href={"/karuta-ticket"}
             >
-              <div className="bg-orange-200 rounded-md px-3 h-[50px] text-orange-950 shadow-orange-600/30 hover:shadow-orange-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-center items-center gap-2">
+              <div className="bg-gradient-to-r from-orange-300 to-orange-400 rounded-md px-3 h-[50px] text-orange-950 shadow-orange-600/30 hover:shadow-orange-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-start items-center gap-2">
                 <Image
                   src={"/karuta-icon.png"}
                   height={35}
                   width={35}
                   alt="Karuta Logo"
+                  className="rounded-lg"
                 />
-                Karuta Tickets Calculator
+                Karuta Tickets
+              </div>
+            </Link>
+            <Link
+              href={"/mazoku-bloodstone"}
+            >
+              <div className="bg-gradient-to-r from-yellow-300 to-yellow-400 rounded-md px-3 h-[50px] text-yellow-950 shadow-yellow-600/30 hover:shadow-yellow-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-start items-center gap-2">
+                <Image
+                  src={"/mazoku-icon.png"}
+                  height={35}
+                  width={35}
+                  alt="Mazoku Logo"
+                  className="rounded-lg"
+                />
+                Mazoku Bloodstones
               </div>
             </Link>
           </div>
@@ -129,7 +145,8 @@ export default function Home() {
       <div ref={ThirdPage} className="relative h-screen flex justify-center items-center">
         <div className="flex flex-col justify-center items-center gap-3">
           <div className="text-center flex flex-col gap-2">
-            <div className="p-3 text-2xl text-white font-extralight w-[400px] sm:w-[600px] border-b border-white/30">This website is intended solely for educational purposes. I do not support or encourage cross-trading in Sofi or Karuta, as it is against the rules. Any actions you take within Sofi or Karuta, including cross-trading or related activities, are your responsibility. I am not accountable for any outcomes or issues that may arise from engaging in this playstyle. Please note that all transactions and outcomes are your responsibility.</div>
+            <div className="pb-4 text-white text-4xl border-b border-white/30">Disclaimer</div>
+            <div className="p-3 pb-4 text-xl text-purple-500 font-extralight w-[400px] sm:w-[600px] border-b border-white/30">This website is intended solely for educational purposes. I do not support or encourage cross-trading in Sofi, Karuta, or Mazoku, as it is against the rules. Any actions you take within Sofi, Karuta, or Mazoku, including cross-trading or related activities, are your responsibility. I am not accountable for any outcomes or issues that may arise from engaging in this playstyle. Please note that all transactions and outcomes are your responsibility.</div>
             <div className="text-white font-extralight">Discord Servers you can join!!</div>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-5 sm:gap-10">
@@ -145,7 +162,6 @@ export default function Home() {
                   alt="Discord Gif"
                 />
                 ItsMe Prince
-
               </div>
             </Link>
             <Link
@@ -207,7 +223,7 @@ export default function Home() {
               </div>
             </Link>
             <Link
-              href={"https://discord.com/invite/karutaskit"}
+              href={"https://discord.gg/mazoku"}
               target="_blank"
             >
               <div className="bg-purple-200 rounded-md px-3 h-[50px] text-purple-950 shadow-purple-600/30 hover:shadow-purple-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-start items-center">
@@ -217,7 +233,7 @@ export default function Home() {
                   width={50}
                   alt="Discord Gif"
                 />
-                Karuta Kit
+                Mazoku Legacy
 
               </div>
             </Link>

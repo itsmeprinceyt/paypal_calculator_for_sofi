@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import HomeButton from "../(components)/HomeButton";
 
-export default function SofiWist() {
+export default function KarutaTicketINR() {
     const [ticketAmount, setTicketAmount] = useState<number>(120);
     const [ratio, setRatio] = useState<number>(4.5);
     const [inrAmount, setInrAmount] = useState<number>(0);

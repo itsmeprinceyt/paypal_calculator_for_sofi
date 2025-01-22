@@ -6,7 +6,7 @@ import Link from "next/link";
 import { calculateFeeAndRecipientAmount } from "@/utils/calculateFee";
 import HomeButton from "../(components)/HomeButton";
 
-export default function SofiWist() {
+export default function KarutaTicket() {
     const [ticketAmount, setTicketAmount] = useState<number>(140);
     const [ratio, setRatio] = useState<number>(14);
     const [result, setResult] = useState<{ fee: number; recipientAmount: number; paymentToReceive: number } | null>(null);

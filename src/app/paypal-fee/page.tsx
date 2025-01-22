@@ -5,7 +5,7 @@ import Image from "next/image";
 import { calculateFeeAndRecipientAmount } from "@/utils/calculateFee";
 import HomeButton from "../(components)/HomeButton";
 
-export default function Home() {
+export default function PayPalFee() {
     const [inputAmount, setInputAmount] = useState<number>(100);
     const [result, setResult] = useState<{ fee: number; recipientAmount: number; paymentToReceive: number } | null>(null);
     const [isInputDisabled, setIsInputDisabled] = useState<boolean>(false);
