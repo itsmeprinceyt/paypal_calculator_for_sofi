@@ -91,13 +91,15 @@ Amount with Tax included: $${result.paymentToReceive}
                             disabled={isInputDisabled}
                         />
                     </div>
-                    <div className="">
+                    <div className=" flex flex-col gap-5 justify-center items-center">
                         <button
                             onClick={handleCalculate}
                             className="z-10 bg-white rounded-md px-5 h-[45px] text-blue-950 shadow-blue-600/60 hover:shadow-blue-600/90 shadow-md hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
                         >
                             If sending this . . .
                         </button>
+
+                        <div className="font-extralight text-xs">4.99% + $.49 (Invoicing, PayPal Checkout, Venmo)</div>
                     </div>
                 </div>
 
