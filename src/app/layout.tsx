@@ -4,7 +4,7 @@ import "./globals.css";
 import AboutMe from "@/app/(components)/AboutMe";
 
 export const metadata: Metadata = {
-  title: "PayPal Fee & Sofi Wists Calculator - ItsMe Prince",
+  title: "PayPal Fee | Sofi Wists | Karuta Tickets Calculator - ItsMe Prince",
   description: "Effortless PayPal and Sofi Wists Calculator for effortless fee calculations. Simplify your financial and gaming calculations effortlessly.",
   keywords: "PayPal Fee Calculator, Sofi Wists Calculator, financial tools, gaming calculators, educational tools",
   robots: "index, follow",
