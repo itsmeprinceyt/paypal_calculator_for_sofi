@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   keywords: "PayPal Fee Calculator, Sofi Wists Calculator, financial tools, gaming calculators, educational tools",
   robots: "index, follow",
   icons: {
-    icon: "/wist_png.png",
+    icon: "/logo.png",
   },
 };
 
