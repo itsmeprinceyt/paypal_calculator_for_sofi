@@ -68,7 +68,7 @@ Calculated ₹ Amount: ₹${inrAmount}
         <div className="h-screen flex flex-col justify-center items-center text-white">
             <HomeButton />
             {popupMessage && (
-                <div className="absolute top-5 bg-orange-500 text-white px-4 py-2 rounded-md shadow-lg transition-all ease-in-out duration-1000">
+                <div className="absolute top-5 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg transition-all ease-in-out duration-1000">
                     {popupMessage}
                 </div>
             )}
@@ -76,13 +76,13 @@ Calculated ₹ Amount: ₹${inrAmount}
 
                 {/* Front Side */}
                 <div
-                    className={`absolute w-full h-full bg-gradient-to-r from-orange-900 to-orange-500 rounded-2xl shadow-orange-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-5 ${isFlipped ? "hidden" : ""}`}
+                    className={`absolute w-full h-full bg-gradient-to-r from-green-900 to-green-500 rounded-2xl shadow-green-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-5 ${isFlipped ? "hidden" : ""}`}
                     style={{
                         backfaceVisibility: "hidden",
                     }}
                 >
                     <h1 className="text-xl font-semibold text-white z-10">Enter Ticket Amount ...</h1>
-                    <div className="relative flex justify-center items-center shadow-md shadow-orange-600/60 rounded-md">
+                    <div className="relative flex justify-center items-center shadow-md shadow-green-600/60 rounded-md">
                         <div className="bg-white h-full flex items-center p-2 rounded-l-md">
                             <Image
                                 src={"/ticket.png"}
@@ -106,7 +106,7 @@ Calculated ₹ Amount: ₹${inrAmount}
                         />
                     </div>
                     <h1 className="text-xl font-semibold text-white z-10">Enter Ratio ...</h1>
-                    <div className="relative flex justify-center items-center shadow-md shadow-orange-600/60 rounded-md">
+                    <div className="relative flex justify-center items-center shadow-md shadow-green-600/60 rounded-md">
                         <input
                             id="ratio"
                             type="number"
@@ -134,7 +134,7 @@ Calculated ₹ Amount: ₹${inrAmount}
                     <div className="flex gap-5 mt-5">
                         <button
                             onClick={handleCalculate}
-                            className="z-10 bg-white rounded-md px-5 h-[45px] text-orange-950 shadow-orange-600/80 hover:shadow-orange-600 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
+                            className="z-10 bg-white rounded-md px-5 h-[45px] text-green-950 shadow-green-600/80 hover:shadow-green-600 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
                         >
                             Calculate
                         </button>
@@ -142,7 +142,7 @@ Calculated ₹ Amount: ₹${inrAmount}
                         href={"/karuta-ticket"}
                         >
                         <button
-                            className="z-10 bg-white rounded-md px-5 h-[45px] text-orange-950 shadow-orange-600/80 hover:shadow-orange-600 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
+                            className="z-10 bg-white rounded-md px-5 h-[45px] text-green-950 shadow-green-600/80 hover:shadow-green-600 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
                         >
                             Switch to USD
                         </button>
@@ -152,7 +152,7 @@ Calculated ₹ Amount: ₹${inrAmount}
 
                 {/* Back Side */}
                 <div
-                    className="absolute w-full h-full bg-gradient-to-r from-orange-500 to-orange-900 rounded-2xl shadow-orange-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-10"
+                    className="absolute w-full h-full bg-gradient-to-r from-green-500 to-green-900 rounded-2xl shadow-green-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-10"
                     style={{
                         backfaceVisibility: "hidden",
                         transform: "rotateY(180deg)",
@@ -175,13 +175,13 @@ Calculated ₹ Amount: ₹${inrAmount}
                     <div className="flex gap-4">
                         <button
                             onClick={handleRestart}
-                            className="z-10 bg-white rounded-md px-5 h-[45px] text-orange-950 shadow-orange-600/80 hover:shadow-orange-600 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
+                            className="z-10 bg-white rounded-md px-5 h-[45px] text-green-950 shadow-green-600/80 hover:shadow-green-600 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
                         >
                             Restart
                         </button>
                         <button
                             onClick={handleCopy}
-                            className="z-10 bg-white rounded-md px-5 h-[45px] text-orange-950 shadow-orange-600/80 hover:shadow-orange-600 shadow-xl hover:scale-105 transition-all ease-in-out  flex justify-center items-center gap-2 active:scale-125"
+                            className="z-10 bg-white rounded-md px-5 h-[45px] text-green-950 shadow-green-600/80 hover:shadow-green-600 shadow-xl hover:scale-105 transition-all ease-in-out  flex justify-center items-center gap-2 active:scale-125"
                         >
                             Copy
                             <Image
