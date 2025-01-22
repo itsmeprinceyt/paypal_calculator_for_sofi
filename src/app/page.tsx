@@ -6,7 +6,7 @@ export default function Home() {
       {/* First Page */}
       <div className="h-screen flex justify-center items-center">
       <div className="flex flex-col justify-center items-center gap-5">
-        <div className="text-center ">
+        <div className="text-center border-b pb-3 border-white/30">
           <div className="sm:text-8xl text-6xl text-white font-semibold">Welcome!</div>
           <div className="text-white font-extralight">Effortless Fee Calculations for PayPal & Sofi Wists!</div>
         </div>
@@ -43,8 +43,8 @@ export default function Home() {
     </div>
     {/* Second Page */}
     <div className="h-screen flex justify-center items-center">
-      <div className="flex flex-col justify-center items-center gap-5">
-        <div className="text-center flex flex-col gap-4">
+      <div className="flex flex-col justify-center items-center gap-3">
+        <div className="text-center flex flex-col gap-2">
           <div className="p-3 text-2xl text-white font-extralight w-[400px] sm:w-[600px] border-b border-white/30">This website is intended solely for educational purposes. I do not support or encourage cross-trading in Sofi, as it is against the rules. Any actions you take within Sofi, including cross-trading or related activities, are your responsibility. I am not accountable for any outcomes or issues that may arise from engaging in this playstyle.</div>
           <div className="text-white font-extralight">Discord Servers you can join!!</div>
         </div>
