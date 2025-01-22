@@ -7,7 +7,7 @@ import HomeButton from "../(components)/HomeButton";
 
 export default function MazokuBloodstoneINR() {
     const [bloodstoneAmount, setBloodstoneAmount] = useState<number>(180);
-    const [ratio, setRatio] = useState<number>(1);
+    const [ratio, setRatio] = useState<number>(0.00558);
     const [inrAmount, setInrAmount] = useState<number>(0);
     const [isInputDisabled, setIsInputDisabled] = useState<boolean>(false);
     const [isFlipped, setIsFlipped] = useState(false);
@@ -36,7 +36,7 @@ export default function MazokuBloodstoneINR() {
 
     const handleRestart = () => {
         setBloodstoneAmount(180);
-        setRatio(1);
+        setRatio(0.00558);
         setInrAmount(0);
         setIsInputDisabled(false);
         setIsFlipped(false);
