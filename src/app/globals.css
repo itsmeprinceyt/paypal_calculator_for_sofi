@@ -13,7 +13,6 @@
 .responsive-video {
     position: relative;
     padding-bottom: 56.25%;
-    /* 16:9 aspect ratio */
     height: 0;
     overflow: hidden;
 }
@@ -30,6 +29,40 @@
 @media (max-width: 400px) {
     .responsive-video {
         padding-bottom: 75%;
-        /* Adjust aspect ratio for smaller screens if needed */
     }
+}
+
+
+.button-3d:hover {
+    box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.253);
+}
+
+.arrow-tooltip {
+    rotate: 180deg;
+}
+
+.arrow-tooltip path {
+    fill: white;
+}
+
+
+.button-3d:hover .arrow-tooltip {
+    width: 20px;
+    transition-duration: 0.3s;
+    transform: translateY(200%);
+}
+
+.button-3d::before {
+    position: absolute;
+    bottom: -20px;
+    content: "Back to Top";
+    color: black;
+    font-size: 0px;
+}
+
+.button-3d:hover::before {
+    font-size: 13px;
+    opacity: 1;
+    bottom: unset;
+    transition-duration: 0.3s;
 }

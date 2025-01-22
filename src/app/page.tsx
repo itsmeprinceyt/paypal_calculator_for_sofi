@@ -241,17 +241,22 @@ export default function Home() {
             <div className="p-3 text-4xl text-white w-[400px] sm:w-[600px] ">Thank You For Visiting!</div>
           </div>
         </div>
-        <button onClick={ScrollToHome}>
-          <Image
-            className="absolute left-1/2 bottom-[30px] transform -translate-x-1/2 animate-pulse hover:animate-none hover:scale-110 transition-all duration-300 ease-in-out rotate-180"
-            src="/down-arrow_white.png"
-            height={50}
-            width={50}
-            alt="arrow"
-          />
-        </button>
+
+        <div className="absolute left-1/2 bottom-[30px] transform -translate-x-1/2 animate-pulse hover:animate-none hover:scale-110 transition-all duration-300 ease-in-out ">
+          <button onClick={ScrollToHome} 
+          className="button-3d w-[50px] h-[50px] hover:h-[40px] rounded-full border-none font-semibold flex items-center justify-center cursor-pointer duration-300 overflow-hidden relative hover:w-[140px] hover:rounded-full hover:items-center hover:bg-white hover:text-black "
+          >
+            <Image
+              className="arrow-tooltip duration-300"
+              src="/down-arrow_white.png"
+              height={50}
+              width={50}
+              alt="arrow"
+            />
+          </button>
+        </div>
       </div>
-      
+
     </div>
   )
 }
