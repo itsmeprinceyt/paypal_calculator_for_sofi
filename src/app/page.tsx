@@ -36,7 +36,7 @@ export default function Home() {
   return (
     <div>
       {/* First Page */}
-      <div ref={Home} className="relative h-screen flex justify-center items-center">
+      <div ref={Home} className="relative h-screen flex flex-col justify-center items-center gap-5">
         <div className="flex flex-col justify-center items-center gap-5">
           <div className="text-center border-b pb-3 border-white/30">
             <div className="sm:text-8xl text-6xl text-white font-semibold">Welcome!</div>
@@ -106,7 +106,7 @@ export default function Home() {
             </Link>
           </div>
         </div>
-
+        <div className="text-white text-xs animate-pulse font-extralight text-center w-[250px] sm:w-[600px]">Default values do not determine the market rates! Please do your own study!</div>
         <button onClick={ScrollToSecondPage}>
           <Image
             className="absolute left-1/2 bottom-[30px] transform -translate-x-1/2 animate-pulse hover:animate-none hover:scale-110 transition-all duration-300 ease-in-out"
