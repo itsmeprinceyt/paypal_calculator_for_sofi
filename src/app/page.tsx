@@ -2,13 +2,15 @@ import Link from "next/link"
 import Image from "next/image"
 export default function Home() {
   return (
-    <div className="h-screen flex justify-center items-center">
+    <div>
+      {/* First Page */}
+      <div className="h-screen flex justify-center items-center">
       <div className="flex flex-col justify-center items-center gap-5">
         <div className="text-center ">
           <div className="sm:text-8xl text-6xl text-white font-semibold">Welcome!</div>
           <div className="text-white font-extralight">Effortless Fee Calculations for PayPal & Sofi Wists!</div>
         </div>
-        <div className="flex gap-10">
+        <div className="flex flex-col sm:flex-row gap-5 sm:gap-10">
           <Link
             href={"/paypal-fee"}
           >
@@ -38,6 +40,61 @@ export default function Home() {
           </Link>
         </div>
       </div>
+    </div>
+    {/* Second Page */}
+    <div className="h-screen flex justify-center items-center">
+      <div className="flex flex-col justify-center items-center gap-5">
+        <div className="text-center flex flex-col gap-4">
+          <div className="p-3 text-2xl text-white font-extralight w-[400px] sm:w-[600px] border-b border-white/30">This website is intended solely for educational purposes. I do not support or encourage cross-trading in Sofi, as it is against the rules. Any actions you take within Sofi, including cross-trading or related activities, are your responsibility. I am not accountable for any outcomes or issues that may arise from engaging in this playstyle.</div>
+          <div className="text-white font-extralight">Discord Servers you can join!!</div>
+        </div>
+        <div className="flex flex-col sm:flex-row gap-5 sm:gap-10">
+          <Link
+            href={"https://discord.gg/HgXNs4p5cx"}
+            target="_blank"
+          >
+            <div className="bg-purple-200 rounded-md px-3 h-[50px] text-purple-950 shadow-purple-600/30 hover:shadow-purple-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-start items-center">
+            <Image
+            src={"/Discord.gif"}
+            height={50}
+            width={50}
+            alt="PayPal Gif"
+            />
+            ItsMe Prince
+            
+            </div>
+          </Link>
+          <Link
+            href={"https://discord.gg/sofi"}
+            target="_blank"
+          >
+            <div className="bg-purple-200 rounded-md px-3 h-[50px] text-purple-950 shadow-purple-600/30 hover:shadow-purple-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-start items-center">
+            <Image
+            src={"/Discord.gif"}
+            height={50}
+            width={50}
+            alt="PayPal Gif"
+            />
+            Sofi Cafe
+            </div>
+          </Link>
+          <Link
+            href={"https://discord.gg/soficorner"}
+            target="_blank"
+          >
+            <div className="bg-purple-200 rounded-md px-3 h-[50px] text-purple-950 shadow-purple-600/30 hover:shadow-purple-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-start items-center">
+            <Image
+            src={"/Discord.gif"}
+            height={50}
+            width={50}
+            alt="PayPal Gif"
+            />
+            Sofi Corner
+            </div>
+          </Link>
+        </div>
+      </div>
+    </div>
     </div>
   )
 }

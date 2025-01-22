@@ -15,13 +15,15 @@ export default function SofiWist() {
 
     const handleWistAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.valueAsNumber;
-        setWistAmount(Math.floor(value));
+        if (value >= 0 || event.target.value === "") {
+            setWistAmount(Math.floor(value) || 0);
+        }
     };
 
     const handleRatioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.valueAsNumber;
         if (value >= 0 || event.target.value === "") {
-            setRatio(value || 1);
+            setRatio(value || 0);
         }
     };
 
@@ -70,7 +72,7 @@ Calculated ₹ Amount: ₹${inrAmount}
                     {popupMessage}
                 </div>
             )}
-            <div className={`relative w-[600px] h-96 transition-transform duration-400 ${isFlipped ? "rotate-y-180" : ""}`} style={{ perspective: "1000px", transformStyle: "preserve-3d", }}>
+            <div className={`relative w-[350px] sm:w-[600px] h-96 transition-transform duration-400 ${isFlipped ? "rotate-y-180" : ""}`} style={{ perspective: "1000px", transformStyle: "preserve-3d", }}>
 
                 {/* Front Side */}
                 <div
@@ -99,7 +101,7 @@ Calculated ₹ Amount: ₹${inrAmount}
                             value={wistAmount}
                             onChange={handleWistAmountChange}
                             placeholder="Enter Wist Amount"
-                            className={`z-10  antialiased text-center text-4xl p-2 rounded-r-md text-black w-[250px] focus:outline-none ${isInputDisabled ? "bg-white cursor-not-allowed" : ""}`}
+                            className={`z-10  antialiased text-center text-4xl p-2 rounded-r-md text-black w-[250px] focus:outline-none placeholder:text-2xl ${isInputDisabled ? "bg-white cursor-not-allowed" : ""}`}
                             disabled={isInputDisabled}
                         />
                     </div>
