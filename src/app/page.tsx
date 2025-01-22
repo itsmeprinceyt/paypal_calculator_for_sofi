@@ -5,9 +5,16 @@ import Image from "next/image"
 import { useRef } from 'react';
 
 export default function Home() {
+  const Home = useRef<HTMLDivElement | null>(null);
   const SecondPage = useRef<HTMLDivElement | null>(null);
   const ThirdPage = useRef<HTMLDivElement | null>(null);
   const FourthPage = useRef<HTMLDivElement | null>(null);
+
+  const ScrollToHome = (): void => {
+    if (Home.current) {
+      Home.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const ScrollToSecondPage = (): void => {
     if (SecondPage.current) {
@@ -29,7 +36,7 @@ export default function Home() {
   return (
     <div>
       {/* First Page */}
-      <div className="relative h-screen flex justify-center items-center">
+      <div ref={Home} className="relative h-screen flex justify-center items-center">
         <div className="flex flex-col justify-center items-center gap-5">
           <div className="text-center border-b pb-3 border-white/30">
             <div className="sm:text-8xl text-6xl text-white font-semibold">Welcome!</div>
@@ -125,7 +132,7 @@ export default function Home() {
             <div className="p-3 text-2xl text-white font-extralight w-[400px] sm:w-[600px] border-b border-white/30">This website is intended solely for educational purposes. I do not support or encourage cross-trading in Sofi, as it is against the rules. Any actions you take within Sofi, including cross-trading or related activities, are your responsibility. I am not accountable for any outcomes or issues that may arise from engaging in this playstyle.</div>
             <div className="text-white font-extralight">Discord Servers you can join!!</div>
           </div>
-          <div className="flex flex-col sm:flex-row gap-5 sm:gap-10">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-5 sm:gap-10">
             <Link
               href={"https://discord.gg/HgXNs4p5cx"}
               target="_blank"
@@ -135,7 +142,7 @@ export default function Home() {
                   src={"/Discord.gif"}
                   height={50}
                   width={50}
-                  alt="PayPal Gif"
+                  alt="Discord Gif"
                 />
                 ItsMe Prince
 
@@ -150,7 +157,7 @@ export default function Home() {
                   src={"/Discord.gif"}
                   height={50}
                   width={50}
-                  alt="PayPal Gif"
+                  alt="Discord Gif"
                 />
                 Sofi Cafe
               </div>
@@ -164,9 +171,54 @@ export default function Home() {
                   src={"/Discord.gif"}
                   height={50}
                   width={50}
-                  alt="PayPal Gif"
+                  alt="Discord Gif"
                 />
                 Sofi Corner
+              </div>
+            </Link>
+            <Link
+              href={"https://discord.gg/karuta"}
+              target="_blank"
+            >
+              <div className="bg-purple-200 rounded-md px-3 h-[50px] text-purple-950 shadow-purple-600/30 hover:shadow-purple-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-start items-center">
+                <Image
+                  src={"/Discord.gif"}
+                  height={50}
+                  width={50}
+                  alt="Discord Gif"
+                />
+                Karuta Hub
+
+              </div>
+            </Link>
+            <Link
+              href={"https://discord.gg/cove"}
+              target="_blank"
+            >
+              <div className="bg-purple-200 rounded-md px-3 h-[50px] text-purple-950 shadow-purple-600/30 hover:shadow-purple-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-start items-center">
+                <Image
+                  src={"/Discord.gif"}
+                  height={50}
+                  width={50}
+                  alt="Discord Gif"
+                />
+                Karuta Cove
+
+              </div>
+            </Link>
+            <Link
+              href={"https://discord.com/invite/karutaskit"}
+              target="_blank"
+            >
+              <div className="bg-purple-200 rounded-md px-3 h-[50px] text-purple-950 shadow-purple-600/30 hover:shadow-purple-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-start items-center">
+                <Image
+                  src={"/Discord.gif"}
+                  height={50}
+                  width={50}
+                  alt="Discord Gif"
+                />
+                Karuta Kit
+
               </div>
             </Link>
           </div>
@@ -189,6 +241,15 @@ export default function Home() {
             <div className="p-3 text-4xl text-white w-[400px] sm:w-[600px] ">Thank You For Visiting!</div>
           </div>
         </div>
+        <button onClick={ScrollToHome}>
+          <Image
+            className="absolute left-1/2 bottom-[30px] transform -translate-x-1/2 animate-pulse hover:animate-none hover:scale-110 transition-all duration-300 ease-in-out rotate-180"
+            src="/down-arrow_white.png"
+            height={50}
+            width={50}
+            alt="arrow"
+          />
+        </button>
       </div>
       
     </div>
