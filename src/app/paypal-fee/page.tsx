@@ -77,8 +77,8 @@ Amount with Tax included: $${result.paymentToReceive}
                     }}
                 >
                     <h1 className="text-xl font-semibold text-white z-10">Enter the amount below ...</h1>
-                    <div className="relative flex justify-center items-center">
-                        <div className=" bg-white antialiased text-center text-4xl border p-2 rounded-l-md text-black shadow-blue-600/20 shadow-md z-10 px-4">$</div>
+                    <div className="relative flex justify-center items-center shadow-md shadow-blue-600/60 rounded-md">
+                        <div className=" bg-white antialiased text-center text-4xl  p-2 rounded-l-md text-black shadow-blue-600/20 shadow-md z-10 px-4">$</div>
                         <input
                             id="amount"
                             type="number"
@@ -87,7 +87,7 @@ Amount with Tax included: $${result.paymentToReceive}
                             value={inputAmount}
                             onChange={handleInputChange}
                             placeholder="Enter amount"
-                            className={`z-10 shadow-blue-600/20 shadow-md antialiased text-center text-4xl border p-2 rounded-r-md text-black w-full focus:outline-none ${isInputDisabled ? "bg-white cursor-not-allowed" : ""
+                            className={`z-10 pr-10 antialiased text-center text-4xl  p-2 rounded-r-md text-black w-full focus:outline-none ${isInputDisabled ? "bg-white cursor-not-allowed" : ""
                                 }`}
                             disabled={isInputDisabled}
                         />
@@ -95,7 +95,7 @@ Amount with Tax included: $${result.paymentToReceive}
                     <div className="">
                         <button
                             onClick={handleCalculate}
-                            className="z-10 bg-white rounded-md px-5 h-[50px] text-blue-950 shadow-blue-600/30 hover:shadow-blue-600/50 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
+                            className="z-10 bg-white rounded-md px-5 h-[45px] text-blue-950 shadow-blue-600/60 hover:shadow-blue-600/90 shadow-md hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
                         >
                             If sending this . . .
                         </button>
@@ -104,7 +104,7 @@ Amount with Tax included: $${result.paymentToReceive}
 
                 {/* Back Side */}
                 <div
-                    className="absolute w-full h-full bg-gradient-to-r from-blue-600 to-blue-900 rounded-2xl shadow-blue-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-5"
+                    className="absolute w-full h-full bg-gradient-to-r from-blue-600 to-blue-900 rounded-2xl shadow-blue-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-10"
                     style={{
                         backfaceVisibility: "hidden",
                         transform: "rotateY(180deg)",
@@ -121,25 +121,23 @@ Amount with Tax included: $${result.paymentToReceive}
                                     <span className="font-semibold text-lg scale-110"> ${result.paymentToReceive}</span> to you.
                                 </p>
                             </div>
-
-
                         </div>
                     )}
                     <div className="flex gap-5">
                         <button
                             onClick={handleRestart}
-                            className="bg-white rounded-md px-5 h-[50px] text-blue-950 shadow-blue-600/90 hover:shadow-blue-600 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
+                            className="bg-white rounded-md px-5 h-[45px] text-blue-950 shadow-blue-600/90 hover:shadow-blue-600 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
                         >
                             Restart
                         </button>
                         <button
                             onClick={handleCopy}
-                            className="bg-white rounded-md px-5 h-[50px] text-blue-950 shadow-blue-600/90 hover:shadow-blue-600 shadow-xl hover:scale-105 transition-all ease-in-out  flex justify-center items-center gap-2 active:scale-125"
+                            className="bg-white rounded-md px-5 h-[45px] text-blue-950 shadow-blue-600/90 hover:shadow-blue-600 shadow-xl hover:scale-105 transition-all ease-in-out  flex justify-center items-center gap-2 active:scale-125"
                         >Copy
                             <Image
                                 src={"/copy.png"}
-                                height={25}
-                                width={25}
+                                height={20}
+                                width={20}
                                 alt="Copy"
                             />
                         </button>

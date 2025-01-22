@@ -31,7 +31,7 @@ export default function Home() {
             src={"/wist_gif.gif"}
             height={40}
             width={40}
-            alt="PayPal Gif"
+            alt="Sofi Wist Gif"
             />
             Sofi Wists Calculator
             </div>
