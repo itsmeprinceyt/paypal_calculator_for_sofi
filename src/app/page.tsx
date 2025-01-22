@@ -33,7 +33,7 @@ export default function Home() {
         <div className="flex flex-col justify-center items-center gap-5">
           <div className="text-center border-b pb-3 border-white/30">
             <div className="sm:text-8xl text-6xl text-white font-semibold">Welcome!</div>
-            <div className="text-white font-extralight">Effortless Fee Calculations for PayPal & Sofi Wists!</div>
+            <div className="text-white font-extralight w-[300px] sm:w-[500px]">Effortless Fee Calculations for PayPal, Sofi Wists and Karuta Tickets!!</div>
           </div>
           <div className="flex flex-col sm:flex-row gap-5 sm:gap-10">
             <Link
@@ -61,6 +61,19 @@ export default function Home() {
                   alt="Sofi Wist Gif"
                 />
                 Sofi Wists Calculator
+              </div>
+            </Link>
+            <Link
+              href={"/karuta-ticket"}
+            >
+              <div className="bg-orange-200 rounded-md px-3 h-[50px] text-orange-950 shadow-orange-600/30 hover:shadow-orange-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-center items-center gap-2">
+                <Image
+                  src={"/karuta-icon.png"}
+                  height={35}
+                  width={35}
+                  alt="Karuta Logo"
+                />
+                Karuta Tickets Calculator
               </div>
             </Link>
           </div>
