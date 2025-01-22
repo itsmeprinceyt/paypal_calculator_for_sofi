@@ -40,7 +40,7 @@ export default function Home() {
         <div className="flex flex-col justify-center items-center gap-5">
           <div className="text-center border-b pb-3 border-white/30">
             <div className="sm:text-8xl text-6xl text-white font-semibold">Welcome!</div>
-            <div className="text-white font-extralight w-[300px] sm:w-[500px]">Effortless Fee Calculations for PayPal, Sofi Wists and Karuta Tickets!!</div>
+            <div className="text-white font-extralight w-[300px] sm:w-[600px]">Effortless Fee Calculations for PayPal, Sofi Wists, Karuta Tickets and Mazoku Bloodstones!!</div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-5">
             <Link

@@ -1,22 +1,22 @@
-# PayPal, SoFi, and Karuta Tickets Fee Calculator
+# PayPal, SoFi, Karuta Tickets, and Mazoku Bloodstone Fee Calculator
 
-The **PayPal, SoFi, and Karuta Tickets Fee Calculator** simplifies the process of calculating fees for transactions across multiple platforms. It provides accurate estimates for PayPal, SoFi, and Karuta Tickets fees, ensuring transparency and efficiency in financial calculations.
+The **PayPal, SoFi, Karuta Tickets, and Mazoku Bloodstone Fee Calculator** simplifies the process of calculating fees for transactions across multiple platforms. It provides accurate estimates for PayPal, SoFi, Karuta Tickets, and Mazoku Bloodstone fees, ensuring transparency and efficiency in financial calculations.
 
 Built with Next.js and styled using Tailwind CSS, this project combines performance with a clean and responsive design.
 
 ## Features
 
 - **Transaction Fee Calculation**  
-  Easily calculate fees for PayPal, SoFi, and Karuta Tickets transactions. Simply enter the transaction amount, and the calculator provides detailed fee breakdowns and net payouts.
+  Easily calculate fees for PayPal, SoFi, Karuta Tickets, and Mazoku Bloodstone transactions. Simply enter the transaction amount, and the calculator provides detailed fee breakdowns and net payouts.
 
 - **User-Friendly Interface**  
   The sleek design and responsive layout make it easy to input values and view results on any device.
 
-- **Dual Platform Support**  
-  Toggle between PayPal, SoFi, and Karuta Tickets fee calculations to get platform-specific details. This feature ensures clarity and accuracy for different transaction needs.
+- **Multi-Platform Support**  
+  Toggle between PayPal, SoFi, Karuta Tickets, and Mazoku Bloodstone fee calculations to get platform-specific details. This feature ensures clarity and accuracy for different transaction needs.
 
 - **Currency Switching**  
-  In the SoFi Wist conversion section, seamlessly switch between USD and INR. This allows you to view transaction fees and net payouts in your preferred currency.
+  In the SoFi Wist and Mazoku Bloodstone conversion sections, seamlessly switch between USD and INR. This allows you to view transaction fees and net payouts in your preferred currency.
 
 - **Customizable Inputs**  
   Adjust transaction values to see real-time updates on calculated fees and payouts.
@@ -33,12 +33,12 @@ Built with Next.js and styled using Tailwind CSS, this project combines performa
 
 1. Clone the Repository:
     ```bash
-    git clone https://github.com/yourusername/paypal-sofi-karuta-fee-calculator.git
+    git clone https://github.com/yourusername/paypal-sofi-karuta-mazoku-fee-calculator.git
     ```
 
 2. Navigate to the Project Directory:
     ```bash
-    cd paypal-sofi-karuta-fee-calculator
+    cd paypal-sofi-karuta-mazoku-fee-calculator
     ```
 
 3. Install Dependencies:
@@ -57,9 +57,9 @@ Built with Next.js and styled using Tailwind CSS, this project combines performa
 
 1. **Access the Application**: Open the application in your browser at [http://localhost:3000](http://localhost:3000).  
 2. **Input Transaction Amounts**: Enter the desired transaction amount in the input field.  
-3. **View Calculations**: The calculator instantly provides fee details and net payouts for PayPal, SoFi, or Karuta Tickets.  
-4. **Switch Platforms**: Toggle between PayPal, SoFi, and Karuta Tickets calculations using the platform switcher.  
-5. **Switch Currency**: In the SoFi Wist conversion section, toggle between USD and INR to view fees and payouts in the desired currency.  
+3. **View Calculations**: The calculator instantly provides fee details and net payouts for PayPal, SoFi, Karuta Tickets, or Mazoku Bloodstone.  
+4. **Switch Platforms**: Toggle between PayPal, SoFi, Karuta Tickets, and Mazoku Bloodstone calculations using the platform switcher.  
+5. **Switch Currency**: In the SoFi Wist and Mazoku Bloodstone conversion sections, toggle between USD and INR to view fees and payouts in the desired currency.  
 6. **Customize and Experiment**: Adjust the transaction amount to explore different fee scenarios and outcomes.
 
 ## Customization
@@ -88,7 +88,7 @@ If you'd like to contribute to this project:
 
 ## Live Demo
 
-Check out the live demo of the project here: https://paypal-sofi-karuta-fee-calculator.vercel.app/
+Check out the live demo of the project here: https://paypal-sofi-karuta-mazoku-fee-calculator.vercel.app/
 
 ## Video Demo
 
