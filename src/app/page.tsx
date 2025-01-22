@@ -234,7 +234,7 @@ export default function Home() {
         </button>
       </div>
 
-      {/* FourthPage Page */}
+      {/* Fourth Page */}
       <div ref={FourthPage} className="relative h-screen flex justify-center items-center">
         <div className="flex flex-col justify-center items-center gap-3">
           <div className="text-center flex flex-col gap-2">
