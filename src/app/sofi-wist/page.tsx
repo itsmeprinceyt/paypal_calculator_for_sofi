@@ -79,9 +79,10 @@ Amount with Tax included: $${result.paymentToReceive}
                 </div>
             )}
             <div className={`relative w-[600px] h-96 transition-transform duration-400 ${isFlipped ? "rotate-y-180" : ""}`} style={{ perspective: "1000px", transformStyle: "preserve-3d", }}>
+
                 {/* Front Side */}
                 <div
-                    className="absolute w-full h-full bg-gradient-to-r from-pink-900 to-pink-500 rounded-2xl shadow-pink-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-5"
+                    className={`absolute w-full h-full bg-gradient-to-r from-pink-900 to-pink-500 rounded-2xl shadow-pink-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-5 ${isFlipped ? "hidden" : ""}`}
                     style={{
                         backfaceVisibility: "hidden",
                     }}
@@ -106,8 +107,7 @@ Amount with Tax included: $${result.paymentToReceive}
                             value={wistAmount}
                             onChange={handleWistAmountChange}
                             placeholder="Enter Wist Amount"
-                            className={`z-10  antialiased text-center text-4xl p-2 rounded-r-md text-black w-[250px] focus:outline-none ${isInputDisabled ? "bg-white cursor-not-allowed" : ""
-                            }`}
+                            className={`z-10  antialiased text-center text-4xl p-2 rounded-r-md text-black w-[250px] focus:outline-none ${isInputDisabled ? "bg-white cursor-not-allowed" : ""}`}
                             disabled={isInputDisabled}
                         />
                     </div>
@@ -121,8 +121,7 @@ Amount with Tax included: $${result.paymentToReceive}
                             value={ratio}
                             onChange={handleRatioChange}
                             placeholder="Enter Ratio"
-                            className={`z-10  antialiased text-center text-4xl  p-2 rounded-l-md text-black w-[150px] focus:outline-none ${isInputDisabled ? "bg-white cursor-not-allowed" : ""
-                            }`}
+                            className={`z-10  antialiased text-center text-4xl  p-2 rounded-l-md text-black w-[150px] focus:outline-none ${isInputDisabled ? "bg-white cursor-not-allowed" : ""}`}
                             disabled={isInputDisabled}
                         />
                         <div className="absolute z-10 top-1 bg-white text-black text-4xl">
@@ -147,12 +146,14 @@ Amount with Tax included: $${result.paymentToReceive}
                         </button>
                     </div>
                 </div>
+
                 {/* Back Side */}
                 <div
                     className="absolute w-full h-full bg-gradient-to-r from-pink-500 to-pink-900 rounded-2xl shadow-pink-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-10"
                     style={{
                         backfaceVisibility: "hidden",
                         transform: "rotateY(180deg)",
+                        zIndex: 20
                     }}
                 >
                     {result && (
@@ -184,7 +185,8 @@ Amount with Tax included: $${result.paymentToReceive}
                         <button
                             onClick={handleCopy}
                             className="z-10 bg-white rounded-md px-5 h-[45px] text-pink-950 shadow-pink-600/80 hover:shadow-pink-600 shadow-xl hover:scale-105 transition-all ease-in-out  flex justify-center items-center gap-2 active:scale-125"
-                        >Copy
+                        >
+                            Copy
                             <Image
                                 src={"/copy.png"}
                                 height={25}
@@ -194,6 +196,7 @@ Amount with Tax included: $${result.paymentToReceive}
                         </button>
                     </div>
                 </div>
+
             </div>
         </div>
     );
