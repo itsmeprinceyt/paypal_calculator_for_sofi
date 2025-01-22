@@ -130,7 +130,7 @@ Calculated ₹ Amount: ₹${inrAmount}
                             />1
                         </div>
                     </div>
-                    <div className="flex gap-10 mt-5">
+                    <div className="flex gap-5 mt-5">
                         <button
                             onClick={handleCalculate}
                             className="z-10 bg-white rounded-md px-5 h-[45px] text-green-950 shadow-green-600/80 hover:shadow-green-600 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
