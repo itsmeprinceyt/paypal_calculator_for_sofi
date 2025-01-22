@@ -167,16 +167,16 @@ Amount with Tax included: $${result.paymentToReceive}
                             <div className="text-center text-xl">
                                 <p className="font-light">
                                     You are selling
-                                    <span className="font-semibold text-lg scale-110">&nbsp;
+                                    <span className="font-bold text-lg scale-110">&nbsp;
                                         {wistAmount} {wistAmount === 1 ? 'Wist' : 'Wists'}
                                     </span>&nbsp;
                                     at the ratio of
-                                    <span className="font-semibold text-lg scale-110"> {ratio} : $1 </span> for
-                                    <span className="font-semibold text-lg scale-110"> ${dollarAmount}</span>, where
-                                    <span className="font-semibold text-lg scale-110"> ${result.fee}</span> will be charged as fee and
-                                    you will receive <span className="font-semibold text-lg scale-110"> ${result.recipientAmount}</span>.
-                                    To receive <span className="font-semibold text-lg scale-110"> ${dollarAmount}</span>, ask them to send
-                                    <span className="font-semibold text-lg scale-110"> ${result.paymentToReceive}</span> to you.
+                                    <span className="font-bold text-lg scale-110"> {ratio} : $1 </span> for
+                                    <span className="font-bold text-lg scale-110"> ${dollarAmount}</span>, where
+                                    <span className="font-bold text-lg scale-110"> ${result.fee}</span> will be charged as fee and
+                                    you will receive <span className="font-bold text-lg scale-110"> ${result.recipientAmount}</span>.
+                                    To receive <span className="font-bold text-lg scale-110"> ${dollarAmount}</span>, ask them to send
+                                    <span className="font-bold text-lg scale-110"> ${result.paymentToReceive}</span> to you.
                                 </p>
                             </div>
                         </div>

@@ -162,12 +162,12 @@ Calculated ₹ Amount: ₹${inrAmount}
                         <div className="text-center text-xl">
                             <p className="font-light">
                                 You are selling
-                                <span className="font-semibold text-lg scale-110">&nbsp;
+                                <span className="font-bold text-lg scale-110">&nbsp;
                                     {wistAmount} {wistAmount === 1 ? 'Wist' : 'Wists'}
                                 </span>&nbsp;
                                 at the ratio of
-                                <span className="font-semibold text-lg scale-110"> ₹{ratio} per Wist </span> for
-                                <span className="font-semibold text-lg scale-110"> ₹{inrAmount}</span>.
+                                <span className="font-bold text-lg scale-110"> ₹{ratio} per Wist </span> for
+                                <span className="font-bold text-lg scale-110"> ₹{inrAmount}</span>.
                             </p>
                         </div>
                     </div>
