@@ -3,21 +3,19 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { calculateFeeAndRecipientAmount } from "@/utils/calculateFee";
 import HomeButton from "../(components)/HomeButton";
 
 export default function SofiWist() {
-    const [wistAmount, setWistAmount] = useState<number>(280);
-    const [ratio, setRatio] = useState<number>(28);
-    const [result, setResult] = useState<{ fee: number; recipientAmount: number; paymentToReceive: number } | null>(null);
+    const [wistAmount, setWistAmount] = useState<number>(300);
+    const [ratio, setRatio] = useState<number>(2.7);
+    const [inrAmount, setInrAmount] = useState<number>(0);
     const [isInputDisabled, setIsInputDisabled] = useState<boolean>(false);
-    const [dollarAmount, setDollarAmount] = useState<number>(0);
     const [isFlipped, setIsFlipped] = useState(false);
     const [popupMessage, setPopupMessage] = useState<string | null>(null);
 
     const handleWistAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.valueAsNumber;
-        setWistAmount(Math.floor(value)); // Ensures only whole numbers
+        setWistAmount(Math.floor(value));
     };
 
     const handleRatioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,54 +26,47 @@ export default function SofiWist() {
     };
 
     const handleCalculate = () => {
-        const calculatedAmount = parseFloat((wistAmount / ratio).toFixed(2));
-        setDollarAmount(calculatedAmount);
-        const calculation = calculateFeeAndRecipientAmount(calculatedAmount);
-        setResult(calculation);
+        const calculatedAmount = wistAmount * ratio;
+        setInrAmount(calculatedAmount);
         setIsInputDisabled(true);
         setIsFlipped(true);
     };
 
     const handleRestart = () => {
-        setWistAmount(280);
-        setRatio(28);
-        setResult(null);
+        setWistAmount(300);
+        setRatio(2.7);
+        setInrAmount(0);
         setIsInputDisabled(false);
-        setDollarAmount(0);
         setIsFlipped(false);
     };
 
     const handleCopy = () => {
-        if (result) {
-            const textToCopy = `\`\`\`css
+        const textToCopy = `\`\`\`css
 Wist Amount: ${wistAmount} Wists
-Ratio: ${ratio} : $1
-Calculated $ Amount: $${dollarAmount}
-Amount without Tax: $${result.recipientAmount}
-Amount with Tax included: $${result.paymentToReceive}
+Ratio: ₹${ratio} per wist
+Calculated ₹ Amount: ₹${inrAmount}
 \`\`\``;
-            const textarea = document.createElement('textarea');
-            textarea.value = textToCopy;
-            textarea.style.position = 'absolute';
-            textarea.style.left = '-9999px';
-            document.body.appendChild(textarea);
-            textarea.select();
-            try {
-                document.execCommand('copy');
-                setPopupMessage("Calculations copied and ready to send!");
-            } catch (err) {
-                console.error('Unable to copy', err);
-            }
-            document.body.removeChild(textarea);
-            setTimeout(() => setPopupMessage(null), 2000);
+        const textarea = document.createElement('textarea');
+        textarea.value = textToCopy;
+        textarea.style.position = 'absolute';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand('copy');
+            setPopupMessage("Calculations copied and ready to send!");
+        } catch (err) {
+            console.error('Unable to copy', err);
         }
+        document.body.removeChild(textarea);
+        setTimeout(() => setPopupMessage(null), 2000);
     };
 
     return (
         <div className="h-screen flex flex-col justify-center items-center text-white">
             <HomeButton />
             {popupMessage && (
-                <div className="absolute top-5 bg-pink-500 text-white px-4 py-2 rounded-md shadow-lg transition-all ease-in-out duration-1000">
+                <div className="absolute top-5 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg transition-all ease-in-out duration-1000">
                     {popupMessage}
                 </div>
             )}
@@ -83,13 +74,13 @@ Amount with Tax included: $${result.paymentToReceive}
 
                 {/* Front Side */}
                 <div
-                    className={`absolute w-full h-full bg-gradient-to-r from-pink-900 to-pink-500 rounded-2xl shadow-pink-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-5 ${isFlipped ? "hidden" : ""}`}
+                    className={`absolute w-full h-full bg-gradient-to-r from-green-900 to-green-500 rounded-2xl shadow-green-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-5 ${isFlipped ? "hidden" : ""}`}
                     style={{
                         backfaceVisibility: "hidden",
                     }}
                 >
                     <h1 className="text-xl font-semibold text-white z-10">Enter Wist Amount ...</h1>
-                    <div className="relative flex justify-center items-center shadow-md shadow-pink-600/60 rounded-md">
+                    <div className="relative flex justify-center items-center shadow-md shadow-green-600/60 rounded-md">
                         <div className="bg-white h-full flex items-center p-2 rounded-l-md">
                             <Image
                                 src={"/wist_gif.gif"}
@@ -113,7 +104,7 @@ Amount with Tax included: $${result.paymentToReceive}
                         />
                     </div>
                     <h1 className="text-xl font-semibold text-white z-10">Enter Ratio ...</h1>
-                    <div className="relative flex justify-center items-center shadow-md shadow-pink-600/60 rounded-md">
+                    <div className="relative flex justify-center items-center shadow-md shadow-green-600/60 rounded-md">
                         <input
                             id="ratio"
                             type="number"
@@ -129,23 +120,28 @@ Amount with Tax included: $${result.paymentToReceive}
                             :
                         </div>
                         <div className="bg-white h-full w-[150px] flex items-center justify-center p-2 rounded-r-md text-black text-4xl  ">
-                            $1
+                        <Image
+                                src={"/wist_gif.gif"}
+                                height={40}
+                                width={40}
+                                alt="Sofi Wist Gif"
+                            />1
                         </div>
                     </div>
                     <div className="flex gap-10 mt-5">
                         <button
                             onClick={handleCalculate}
-                            className="z-10 bg-white rounded-md px-5 h-[45px] text-pink-950 shadow-pink-600/80 hover:shadow-pink-600 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
+                            className="z-10 bg-white rounded-md px-5 h-[45px] text-green-950 shadow-green-600/80 hover:shadow-green-600 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
                         >
                             Calculate
                         </button>
                         <Link
-                        href={"/sofi-wist-inr"}
+                        href={"/sofi-wist"}
                         >
                         <button
-                            className="z-10 bg-white rounded-md px-5 h-[45px] text-pink-950 shadow-pink-600/80 hover:shadow-pink-600 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
+                            className="z-10 bg-white rounded-md px-5 h-[45px] text-green-950 shadow-green-600/80 hover:shadow-green-600 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
                         >
-                            Switch to INR
+                            Switch to USD
                         </button>
                         </Link>
                     </div>
@@ -153,42 +149,36 @@ Amount with Tax included: $${result.paymentToReceive}
 
                 {/* Back Side */}
                 <div
-                    className="absolute w-full h-full bg-gradient-to-r from-pink-500 to-pink-900 rounded-2xl shadow-pink-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-10"
+                    className="absolute w-full h-full bg-gradient-to-r from-green-500 to-green-900 rounded-2xl shadow-green-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-10"
                     style={{
                         backfaceVisibility: "hidden",
                         transform: "rotateY(180deg)",
                         zIndex: 20
                     }}
                 >
-                    {result && (
-                        <div className="flex flex-col gap-3 w-10/12 text-white">
-                            <div className="text-center text-xl">
-                                <p className="font-light">
-                                    You are selling
-                                    <span className="font-semibold text-lg scale-110">&nbsp;
-                                        {wistAmount} {wistAmount === 1 ? 'Wist' : 'Wists'}
-                                    </span>&nbsp;
-                                    at the ratio of
-                                    <span className="font-semibold text-lg scale-110"> {ratio} : $1 </span> for
-                                    <span className="font-semibold text-lg scale-110"> ${dollarAmount}</span>, where
-                                    <span className="font-semibold text-lg scale-110"> ${result.fee}</span> will be charged as fee and
-                                    you will receive <span className="font-semibold text-lg scale-110"> ${result.recipientAmount}</span>.
-                                    To receive <span className="font-semibold text-lg scale-110"> ${dollarAmount}</span>, ask them to send
-                                    <span className="font-semibold text-lg scale-110"> ${result.paymentToReceive}</span> to you.
-                                </p>
-                            </div>
+                    <div className="flex flex-col gap-3 w-10/12 text-white">
+                        <div className="text-center text-xl">
+                            <p className="font-light">
+                                You are selling
+                                <span className="font-semibold text-lg scale-110">&nbsp;
+                                    {wistAmount} {wistAmount === 1 ? 'Wist' : 'Wists'}
+                                </span>&nbsp;
+                                at the ratio of
+                                <span className="font-semibold text-lg scale-110"> ₹{ratio} per Wist </span> for
+                                <span className="font-semibold text-lg scale-110"> ₹{inrAmount}</span>.
+                            </p>
                         </div>
-                    )}
+                    </div>
                     <div className="flex gap-4">
                         <button
                             onClick={handleRestart}
-                            className="z-10 bg-white rounded-md px-5 h-[45px] text-pink-950 shadow-pink-600/80 hover:shadow-pink-600 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
+                            className="z-10 bg-white rounded-md px-5 h-[45px] text-green-950 shadow-green-600/80 hover:shadow-green-600 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
                         >
                             Restart
                         </button>
                         <button
                             onClick={handleCopy}
-                            className="z-10 bg-white rounded-md px-5 h-[45px] text-pink-950 shadow-pink-600/80 hover:shadow-pink-600 shadow-xl hover:scale-105 transition-all ease-in-out  flex justify-center items-center gap-2 active:scale-125"
+                            className="z-10 bg-white rounded-md px-5 h-[45px] text-green-950 shadow-green-600/80 hover:shadow-green-600 shadow-xl hover:scale-105 transition-all ease-in-out  flex justify-center items-center gap-2 active:scale-125"
                         >
                             Copy
                             <Image

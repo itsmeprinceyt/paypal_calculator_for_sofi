@@ -71,9 +71,9 @@ Amount with Tax included: $${result.paymentToReceive}
             <div className={`relative w-[600px] h-80 transition-transform duration-400 ${isFlipped ? "rotate-y-180" : ""}`} style={{ perspective: "1000px", transformStyle: "preserve-3d", }}>
                 {/* Front Side */}
                 <div
-                    className="absolute w-full h-full bg-gradient-to-r from-blue-900 to-blue-600 rounded-2xl shadow-blue-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-5"
+                    className={`absolute w-full h-full bg-gradient-to-r from-blue-900 to-blue-600 rounded-2xl shadow-blue-600/50 shadow-2xl p-5 ${isFlipped ? 'hidden' : ''} backface-hidden flex flex-col justify-center items-center gap-5`}
                     style={{
-                        backfaceVisibility: "hidden",
+                        backfaceVisibility: 'hidden',
                     }}
                 >
                     <h1 className="text-xl font-semibold text-white z-10">Enter the amount below ...</h1>
@@ -87,8 +87,7 @@ Amount with Tax included: $${result.paymentToReceive}
                             value={inputAmount}
                             onChange={handleInputChange}
                             placeholder="Enter amount"
-                            className={`z-10 pr-10 antialiased text-center text-4xl  p-2 rounded-r-md text-black w-full focus:outline-none ${isInputDisabled ? "bg-white cursor-not-allowed" : ""
-                                }`}
+                            className={`z-10 pr-10 antialiased text-center text-4xl  p-2 rounded-r-md text-black w-full focus:outline-none ${isInputDisabled ? "bg-white cursor-not-allowed" : ""}`}
                             disabled={isInputDisabled}
                         />
                     </div>
