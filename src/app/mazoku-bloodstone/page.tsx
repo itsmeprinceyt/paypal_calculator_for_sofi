@@ -85,7 +85,7 @@ Amount with Tax included: $${result.paymentToReceive}
 
                 {/* Front Side */}
                 <div
-                    className={`absolute w-full h-full bg-gradient-to-r from-yellow-900 to-yellow-500 rounded-2xl shadow-yellow-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-5 ${isFlipped ? "hidden" : ""}`}
+                    className={`absolute w-full h-full bg-gradient-to-r from-yellow-600 to-yellow-400 rounded-2xl shadow-yellow-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-5 ${isFlipped ? "hidden" : ""}`}
                     style={{
                         backfaceVisibility: "hidden",
                     }}
@@ -155,7 +155,7 @@ Amount with Tax included: $${result.paymentToReceive}
 
                 {/* Back Side */}
                 <div
-                    className="absolute w-full h-full bg-gradient-to-r from-yellow-500 to-yellow-900 rounded-2xl shadow-yellow-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-10"
+                    className="absolute w-full h-full bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-2xl shadow-yellow-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-10"
                     style={{
                         backfaceVisibility: "hidden",
                         transform: "rotateY(180deg)",
@@ -163,7 +163,7 @@ Amount with Tax included: $${result.paymentToReceive}
                     }}
                 >
                     {result && (
-                        <div className="flex flex-col gap-3 w-10/12 text-white">
+                        <div className="flex flex-col gap-3 w-10/12 text-yellow-950">
                             <div className="text-center text-xl">
                                 <p className="font-light">
                                     You are selling
