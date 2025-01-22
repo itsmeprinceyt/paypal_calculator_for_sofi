@@ -29,7 +29,8 @@ export default function SofiWistINR() {
 
     const handleCalculate = () => {
         const calculatedAmount = wistAmount * ratio;
-        setInrAmount(calculatedAmount);
+        const formattedAmount = parseFloat(calculatedAmount.toFixed(2));
+        setInrAmount(formattedAmount);
         setIsInputDisabled(true);
         setIsFlipped(true);
     };
@@ -167,7 +168,7 @@ Calculated ₹ Amount: ₹${inrAmount}
                                 </span>&nbsp;
                                 at the ratio of
                                 <span className="font-bold text-lg scale-110"> ₹{ratio} per Wist </span> for
-                                <span className="font-bold text-lg scale-110"> ₹{inrAmount}</span>.
+                                <span className="font-bold text-lg scale-110"> ₹{inrAmount}</span>
                             </p>
                         </div>
                     </div>

@@ -29,7 +29,8 @@ export default function MazokuBloodstoneINR() {
 
     const handleCalculate = () => {
         const calculatedAmount = bloodstoneAmount * ratio;
-        setInrAmount(calculatedAmount);
+        const formattedAmount = parseFloat(calculatedAmount.toFixed(2));
+        setInrAmount(formattedAmount);
         setIsInputDisabled(true);
         setIsFlipped(true);
     };
@@ -168,7 +169,7 @@ Calculated ₹ Amount: ₹${inrAmount}
                                 </span>&nbsp;
                                 at the ratio of
                                 <span className="font-bold text-lg scale-110"> ₹{ratio} per Bloodstone </span> for
-                                <span className="font-bold text-lg scale-110"> ₹{inrAmount}</span>.
+                                <span className="font-bold text-lg scale-110"> ₹{inrAmount}</span>
                             </p>
                         </div>
                     </div>
