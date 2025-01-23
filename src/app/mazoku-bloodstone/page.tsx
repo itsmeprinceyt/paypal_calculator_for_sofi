@@ -81,7 +81,7 @@ Amount with Tax included: $${result.paymentToReceive}
                     {popupMessage}
                 </div>
             )}
-            <div className={`relative w-[350px] sm:w-[600px] h-96 transition-transform duration-400 ${isFlipped ? "rotate-y-180" : ""}`} style={{ perspective: "1000px", transformStyle: "preserve-3d", }}>
+            <div className={`relative w-[350px] sm:w-[600px] h-96 transition-transform duration-500 ${isFlipped ? "rotate-y-180" : ""}`} style={{ perspective: "1000px", transformStyle: "preserve-3d", }}>
 
                 {/* Front Side */}
                 <div
