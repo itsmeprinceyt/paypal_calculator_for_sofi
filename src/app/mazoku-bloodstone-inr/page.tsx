@@ -48,7 +48,8 @@ export default function MazokuBloodstoneINR() {
 Bloodstone Amount: ${bloodstoneAmount} Bloodstones
 Ratio: ₹${ratio} per Bloodstone
 Calculated ₹ Amount: ₹${inrAmount}
-\`\`\``;
+\`\`\`
+-# Calculated Using: [PayPal | Sofi | Karuta | Mazoku Fee Calculator by ItsMe Prince]( https://paypal-and-sofi-wist-fee-calculator.vercel.app/)`;
         const textarea = document.createElement('textarea');
         textarea.value = textToCopy;
         textarea.style.position = 'absolute';
