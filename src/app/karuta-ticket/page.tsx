@@ -55,7 +55,8 @@ Ratio: ${ratio} : $1
 Calculated $ Amount: $${dollarAmount}
 Amount without Tax: $${result.recipientAmount}
 Amount with Tax included: $${result.paymentToReceive}
-\`\`\``;
+\`\`\`
+-# Calculated Using: [PayPal | Sofi | Karuta | Mazoku Fee Calculator by ItsMe Prince](https://paypal-and-sofi-wist-fee-calculator.vercel.app/)`;
             const textarea = document.createElement('textarea');
             textarea.value = textToCopy;
             textarea.style.position = 'absolute';
