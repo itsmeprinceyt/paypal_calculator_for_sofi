@@ -48,7 +48,8 @@ export default function SofiWistINR() {
 Wist Amount: ${wistAmount} Wists
 Ratio: ₹${ratio} per wist
 Calculated ₹ Amount: ₹${inrAmount}
-\`\`\``;
+\`\`\`
+-# Calculated Using: [PayPal | Sofi | Karuta | Mazoku Fee Calculator by ItsMe Prince]( https://paypal-and-sofi-wist-fee-calculator.vercel.app/)`;
         const textarea = document.createElement('textarea');
         textarea.value = textToCopy;
         textarea.style.position = 'absolute';
