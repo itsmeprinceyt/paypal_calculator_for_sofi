@@ -175,7 +175,7 @@ Amount with Tax included: $${result.paymentToReceive}
                                     <span className="font-bold text-lg scale-110"> {ratio} : $1 </span> for
                                     <span className="font-bold text-lg scale-110"> ${dollarAmount}</span>, where
                                     <span className="font-bold text-lg scale-110"> ${result.fee}</span> will be charged as fee and
-                                    you will receive <span className="font-bold text-lg scale-110"> ${result.recipientAmount}</span>.
+                                    you will receive approximately <span className="font-bold text-lg scale-110"> ${result.recipientAmount}</span>.
                                     To receive <span className="font-bold text-lg scale-110"> ${dollarAmount}</span>, ask them to send
                                     <span className="font-bold text-lg scale-110"> ${result.paymentToReceive}</span> to you.
                                 </p>

@@ -117,7 +117,7 @@ Amount with Tax included: $${result.paymentToReceive}
                             <div className="text-center text-xl">
                                 <p className="font-light">
                                     If you&apos;re sending <span className="font-bold text-lg scale-110">${inputAmount}</span>, then you will be charged
-                                    <span className="font-bold text-lg scale-110"> ${result.fee}</span> as fee and you will receive
+                                    <span className="font-bold text-lg scale-110"> ${result.fee}</span> as fee and you will receive approximately 
                                     <span className="font-bold text-lg scale-110"> ${result.recipientAmount}</span>. To receive
                                     <span className="font-bold text-lg scale-110"> ${inputAmount}</span>, ask them to send
                                     <span className="font-bold text-lg scale-110"> ${result.paymentToReceive}</span> to you.
