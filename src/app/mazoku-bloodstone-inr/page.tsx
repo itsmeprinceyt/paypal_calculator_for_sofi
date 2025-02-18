@@ -7,7 +7,7 @@ import HomeButton from "../(components)/HomeButton";
 
 export default function MazokuBloodstoneINR() {
     const [bloodstoneAmount, setBloodstoneAmount] = useState<number>(180);
-    const [ratio, setRatio] = useState<number>(0.00558);
+    const [ratio, setRatio] = useState<number>(160);
     const [inrAmount, setInrAmount] = useState<number>(0);
     const [isInputDisabled, setIsInputDisabled] = useState<boolean>(false);
     const [isFlipped, setIsFlipped] = useState(false);
@@ -28,7 +28,7 @@ export default function MazokuBloodstoneINR() {
     };
 
     const handleCalculate = () => {
-        const calculatedAmount = bloodstoneAmount * ratio;
+        const calculatedAmount = bloodstoneAmount / ratio;
         const formattedAmount = parseFloat(calculatedAmount.toFixed(2));
         setInrAmount(formattedAmount);
         setIsInputDisabled(true);
@@ -37,7 +37,7 @@ export default function MazokuBloodstoneINR() {
 
     const handleRestart = () => {
         setBloodstoneAmount(180);
-        setRatio(0.00558);
+        setRatio(160);
         setInrAmount(0);
         setIsInputDisabled(false);
         setIsFlipped(false);
@@ -45,8 +45,8 @@ export default function MazokuBloodstoneINR() {
 
     const handleCopy = () => {
         const textToCopy = `\`\`\`css
-Bloodstone Amount: ${bloodstoneAmount} Bloodstones
-Ratio: ₹${ratio} per Bloodstone
+Bloodstone Amount: ${bloodstoneAmount} BS
+Ratio: ${ratio} BS per ₹1
 Calculated ₹ Amount: ₹${inrAmount}
 \`\`\`
 -# Calculated Using: [PayPal | Sofi | Karuta | Mazoku Fee Calculator by ItsMe Prince]( https://paypal-and-sofi-wist-fee-calculator.vercel.app/)`;
@@ -124,13 +124,7 @@ Calculated ₹ Amount: ₹${inrAmount}
                             :
                         </div>
                         <div className="bg-white h-full w-[150px] flex items-center justify-center p-2 rounded-r-md text-black text-4xl  ">
-                            <Image
-                                src={"/bloodstone.png"}
-                                height={40}
-                                width={40}
-                                alt="Bloodstone Icon"
-                            />
-                            1
+                        ₹1
                         </div>
                     </div>
                     <div className="flex gap-5 mt-5">
@@ -169,7 +163,7 @@ Calculated ₹ Amount: ₹${inrAmount}
                                     {bloodstoneAmount} {bloodstoneAmount === 1 ? 'Bloodstone' : 'Bloodstones'}
                                 </span>&nbsp;
                                 at the ratio of
-                                <span className="font-bold text-lg scale-110"> ₹{ratio} per Bloodstone </span> for
+                                <span className="font-bold text-lg scale-110"> {ratio} Bloodstone per ₹1 </span> for
                                 <span className="font-bold text-lg scale-110"> ₹{inrAmount}</span>
                             </p>
                         </div>

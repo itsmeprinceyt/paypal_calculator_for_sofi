@@ -39,8 +39,8 @@ export default function KarutaTicket() {
     };
 
     const handleRestart = () => {
-        setTicketAmount(280);
-        setRatio(28);
+        setTicketAmount(140);
+        setRatio(14);
         setResult(null);
         setIsInputDisabled(false);
         setDollarAmount(0);
