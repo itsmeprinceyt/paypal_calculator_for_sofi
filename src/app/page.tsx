@@ -194,7 +194,7 @@ export default function Home() {
                   width={50}
                   alt="Discord Gif"
                 />
-                Sofi Corner
+                The Corner
               </div>
             </Link>
             <Link
@@ -223,7 +223,7 @@ export default function Home() {
                   width={50}
                   alt="Discord Gif"
                 />
-                Karuta Cove
+                Egg Cove
 
               </div>
             </Link>
