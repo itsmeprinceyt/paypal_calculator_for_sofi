@@ -52,9 +52,9 @@ export default function SofiWist() {
             const textToCopy = `\`\`\`css
 Bloodstone Amount: ${bloodstoneAmount} Bloodstones
 Ratio: ${ratio} : $1
-Calculated $ Amount: $${dollarAmount}
-Amount without Tax: $${result.recipientAmount}
-Amount with Tax included: $${result.paymentToReceive}
+Calculated $ Amount: USD$ ${dollarAmount}
+Amount without Tax: USD$ ${result.recipientAmount}
+Amount with Tax included: USD$ ${result.paymentToReceive}
 \`\`\`
 -# Calculated Using: [PayPal | Sofi | Karuta | Mazoku Fee Calculator by ItsMe Prince]( https://paypal-and-sofi-wist-fee-calculator.vercel.app/)`;
             const textarea = document.createElement('textarea');
@@ -131,8 +131,8 @@ Amount with Tax included: $${result.paymentToReceive}
                         <div className="absolute z-10 top-1 white text-black text-4xl">
                             :
                         </div>
-                        <div className="bg-white h-full w-[150px] flex items-center justify-center p-2 rounded-r-md text-black text-4xl">
-                            $1
+                        <div className="bg-white h-full w-[150px] flex items-center justify-center p-2 rounded-r-md text-black text-4xl select-none">
+                            USD$1
                         </div>
                     </div>
                     <div className="flex gap-5 mt-5">

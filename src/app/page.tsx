@@ -34,7 +34,7 @@ export default function Home() {
     }
   };
   return (
-    <div>
+    <div className="select-none">
       {/* First Page */}
       <div ref={Home} className="relative h-screen flex flex-col justify-center items-center gap-5">
         <div className="flex flex-col justify-center items-center gap-5">

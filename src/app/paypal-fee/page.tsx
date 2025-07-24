@@ -39,9 +39,9 @@ export default function PayPalFee() {
     const handleCopy = () => {
         if (result) {
             const textToCopy = `\`\`\`css
-Amount: $${inputAmount}
-Amount without Tax: $${result.recipientAmount}
-Amount with Tax included: $${result.paymentToReceive}
+Amount: USD$ ${inputAmount}
+Amount without Tax: USD$ ${result.recipientAmount}
+Amount with Tax included: USD$ ${result.paymentToReceive}
 \`\`\`
 -# Calculated Using: [PayPal | Sofi | Karuta | Mazoku Fee Calculator by ItsMe Prince]( https://paypal-and-sofi-wist-fee-calculator.vercel.app/)`;
             const textarea = document.createElement('textarea');
@@ -79,7 +79,7 @@ Amount with Tax included: $${result.paymentToReceive}
                 >
                     <h1 className="text-xl font-semibold text-white z-10">Enter the amount below ...</h1>
                     <div className="relative flex justify-center items-center shadow-md shadow-blue-600/60 rounded-md">
-                        <div className=" bg-white antialiased text-center text-4xl  p-2 rounded-l-md text-black shadow-blue-600/20 shadow-md z-10 px-4">$</div>
+                        <div className=" bg-white antialiased text-center text-4xl  p-2 rounded-l-md text-black shadow-blue-600/20 shadow-md z-10 px-4 select-none">USD$</div>
                         <input
                             id="amount"
                             type="number"
@@ -88,7 +88,7 @@ Amount with Tax included: $${result.paymentToReceive}
                             value={inputAmount}
                             onChange={handleInputChange}
                             placeholder="Enter amount"
-                            className={`z-10 pr-10 antialiased text-center text-4xl  p-2 rounded-r-md text-black w-full focus:outline-none ${isInputDisabled ? "bg-white cursor-not-allowed" : ""}`}
+                            className={`z-10 pr-5 antialiased text-center text-4xl  p-2 rounded-r-md text-black w-full focus:outline-none ${isInputDisabled ? "bg-white cursor-not-allowed" : ""}`}
                             disabled={isInputDisabled}
                         />
                     </div>
