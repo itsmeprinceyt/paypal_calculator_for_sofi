@@ -4,11 +4,11 @@ import "./globals.css";
 import AboutMe from "@/app/(components)/AboutMe";
 
 export const metadata: Metadata = {
-  title: "PayPal, Sofi, Karuta, Mazoku Fee Calculator - ItsMe Prince",
+  title: "PayPal, Sofi, Karuta, Nai, Mazoku Fee Calculator - ItsMe Prince",
   description:
-    "Comprehensive calculators for PayPal fees, Sofi wists, Karuta tickets, and Mazoku bloodstones. Simplify financial and gaming calculations with ease.",
+    "Comprehensive calculators for PayPal fees, Sofi wists, Karuta tickets, Nai Jades and Mazoku bloodstones. Simplify financial and gaming calculations with ease.",
   keywords:
-    "PayPal Fee Calculator, Sofi Wists Fee Calculator, Karuta Tickets Calculator, Mazoku Bloodstones Calculator, financial tools, gaming tools, calculation tools",
+    "PayPal Fee Calculator, Sofi Wists Fee Calculator, Karuta Tickets Calculator, Mazoku Bloodstones Calculator, Nai Jades Calculator, Discord Game GNS Paypal Calculator, financial tools, gaming tools, calculation tools",
   robots: "index, follow",
   icons: {
     icon: "/logo2.png",
