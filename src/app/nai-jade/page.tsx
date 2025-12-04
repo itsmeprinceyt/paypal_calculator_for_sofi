@@ -6,9 +6,9 @@ import Link from "next/link";
 import { calculateFeeAndRecipientAmount } from "@/utils/calculateFee";
 import HomeButton from "../(components)/HomeButton";
 
-export default function SofiWist() {
-  const [wistAmount, setWistAmount] = useState<number>(280);
-  const [ratio, setRatio] = useState<number>(28);
+export default function NaiUSD() {
+  const [jadeAmount, setJadeAmount] = useState<number>(540);
+  const [ratio, setRatio] = useState<number>(18);
   const [result, setResult] = useState<{
     fee: number;
     recipientAmount: number;
@@ -19,12 +19,12 @@ export default function SofiWist() {
   const [isFlipped, setIsFlipped] = useState(false);
   const [popupMessage, setPopupMessage] = useState<string | null>(null);
 
-  const handleWistAmountChange = (
+  const handlejadeAmountChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = event.target.valueAsNumber;
     if (value >= 0 || event.target.value === "") {
-      setWistAmount(Math.floor(value) || 0);
+      setJadeAmount(Math.floor(value) || 0);
     }
   };
 
@@ -36,7 +36,7 @@ export default function SofiWist() {
   };
 
   const handleCalculate = () => {
-    const calculatedAmount = parseFloat((wistAmount / ratio).toFixed(2));
+    const calculatedAmount = parseFloat((jadeAmount / ratio).toFixed(2));
     setDollarAmount(calculatedAmount);
     const calculation = calculateFeeAndRecipientAmount(calculatedAmount);
     setResult(calculation);
@@ -45,8 +45,8 @@ export default function SofiWist() {
   };
 
   const handleRestart = () => {
-    setWistAmount(280);
-    setRatio(28);
+    setJadeAmount(540);
+    setRatio(18);
     setResult(null);
     setIsInputDisabled(false);
     setDollarAmount(0);
@@ -56,7 +56,7 @@ export default function SofiWist() {
   const handleCopy = () => {
     if (result) {
       const textToCopy = `\`\`\`css
-Wist Amount: ${wistAmount} Wists
+Jade Amount: ${jadeAmount} Jades
 Ratio: ${ratio} : $1
 Calculated $ Amount: USD$ ${dollarAmount}
 Amount without Tax: USD$ ${result.recipientAmount}
@@ -81,10 +81,10 @@ Amount with Tax included: USD$ ${result.paymentToReceive}
   };
 
   return (
-    <div className="h-screen flex flex-col justify-center items-center text-white">
+    <div className="h-screen flex flex-col justify-center items-center text-green-950">
       <HomeButton />
       {popupMessage && (
-        <div className="absolute top-5 bg-pink-500 text-white px-4 py-2 rounded-md shadow-lg transition-all ease-in-out duration-1000">
+        <div className="absolute top-5 bg-green-500 text-green-950 px-4 py-2 rounded-md shadow-lg transition-all ease-in-out duration-1000">
           {popupMessage}
         </div>
       )}
@@ -96,46 +96,45 @@ Amount with Tax included: USD$ ${result.paymentToReceive}
       >
         {/* Front Side */}
         <div
-          className={`absolute w-full h-full bg-gradient-to-r from-pink-900 to-pink-500 rounded-2xl shadow-pink-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-5 ${
+          className={`absolute w-full h-full bg-gradient-to-r from-green-600 to-green-400 rounded-2xl shadow-green-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-5 ${
             isFlipped ? "hidden" : ""
           }`}
           style={{
             backfaceVisibility: "hidden",
           }}
         >
-          <h1 className="text-xl font-semibold text-white z-10">
-            Enter Wist Amount ...
+          <h1 className="text-xl font-semibold text-green-950 z-10">
+            Enter Jades Amount ...
           </h1>
-          <div className="relative flex justify-center items-center shadow-md shadow-pink-600/60 rounded-md">
+          <div className="relative flex justify-center items-center shadow-md shadow-green-600/60 rounded-md">
             <div className="bg-white h-full flex items-center p-2 rounded-l-md">
               <Image
-                src={"/wist_gif.gif"}
+                src={"/jade-icon.png"}
                 height={40}
                 width={40}
-                alt="Sofi Wist Gif"
-                unoptimized
+                alt="Jade Icon"
               />
             </div>
             <input
-              id="wistAmount"
+              id="jadeAmount"
               type="number"
               min="1"
               step="1"
               pattern="\d*"
               inputMode="numeric"
-              value={wistAmount}
-              onChange={handleWistAmountChange}
-              placeholder="Enter Wist Amount"
-              className={`z-10  antialiased text-center text-4xl p-2 rounded-r-md text-black w-[250px] focus:outline-none placeholder:text-2xl ${
-                isInputDisabled ? "bg-white cursor-not-allowed" : ""
+              value={jadeAmount}
+              onChange={handlejadeAmountChange}
+              placeholder="Enter Bloodstone Amount"
+              className={`z-10 antialiased text-center text-4xl p-2 rounded-r-md text-black w-[250px] focus:outline-none placeholder:text-2xl ${
+                isInputDisabled ? "bg-green-950 cursor-not-allowed" : ""
               }`}
               disabled={isInputDisabled}
             />
           </div>
-          <h1 className="text-xl font-semibold text-white z-10">
+          <h1 className="text-xl font-semibold text-green-950 z-10">
             Enter Ratio ...
           </h1>
-          <div className="relative flex justify-center items-center shadow-md shadow-pink-600/60 rounded-md">
+          <div className="relative flex justify-center items-center shadow-md shadow-green-600/60 rounded-md">
             <input
               id="ratio"
               type="number"
@@ -144,12 +143,12 @@ Amount with Tax included: USD$ ${result.paymentToReceive}
               value={ratio}
               onChange={handleRatioChange}
               placeholder="Enter Ratio"
-              className={`z-10  antialiased text-center text-4xl  p-2 rounded-l-md text-black w-[150px] focus:outline-none ${
-                isInputDisabled ? "bg-white cursor-not-allowed" : ""
+              className={`z-10 antialiased text-center text-4xl p-2 rounded-l-md text-green-950 w-[150px] focus:outline-none ${
+                isInputDisabled ? "bg-green-950 cursor-not-allowed" : ""
               }`}
               disabled={isInputDisabled}
             />
-            <div className="absolute z-10 top-1 bg-white text-black text-4xl">
+            <div className="absolute z-10 top-1 white text-black text-4xl">
               :
             </div>
             <div className="bg-white h-full w-[150px] flex items-center justify-center p-2 rounded-r-md text-black text-4xl select-none">
@@ -159,12 +158,12 @@ Amount with Tax included: USD$ ${result.paymentToReceive}
           <div className="flex gap-5 mt-5">
             <button
               onClick={handleCalculate}
-              className="z-10 bg-white rounded-md px-5 h-[45px] text-pink-950 shadow-pink-600/80 hover:shadow-pink-600 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
+              className="z-10 bg-white rounded-md px-5 h-[45px] text-green-950 shadow-green-700/80 hover:shadow-green-800 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
             >
               Calculate
             </button>
-            <Link href={"/sofi-wist-inr"}>
-              <button className="z-10 bg-white rounded-md px-5 h-[45px] text-pink-950 shadow-pink-600/80 hover:shadow-pink-600 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center">
+            <Link href={"/nai-jade-inr"}>
+              <button className="z-10 bg-white rounded-md px-5 h-[45px] text-green-950 shadow-green-700/80 hover:shadow-green-800 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center">
                 Switch to INR
               </button>
             </Link>
@@ -173,7 +172,7 @@ Amount with Tax included: USD$ ${result.paymentToReceive}
 
         {/* Back Side */}
         <div
-          className="absolute w-full h-full bg-gradient-to-r from-pink-500 to-pink-900 rounded-2xl shadow-pink-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-10"
+          className="absolute w-full h-full bg-gradient-to-r from-green-400 to-green-600 rounded-2xl shadow-green-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-10"
           style={{
             backfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
@@ -181,13 +180,13 @@ Amount with Tax included: USD$ ${result.paymentToReceive}
           }}
         >
           {result && (
-            <div className="flex flex-col gap-3 w-10/12 text-white">
+            <div className="flex flex-col gap-3 w-10/12 text-green-950">
               <div className="text-center text-xl">
                 <p className="font-light">
                   You are selling
                   <span className="font-bold text-lg scale-110">
                     &nbsp;
-                    {wistAmount} {wistAmount === 1 ? "Wist" : "Wists"}
+                    {jadeAmount} {jadeAmount === 1 ? "Jade" : "Jades"}
                   </span>
                   &nbsp; at the ratio of
                   <span className="font-bold text-lg scale-110">
@@ -227,13 +226,13 @@ Amount with Tax included: USD$ ${result.paymentToReceive}
           <div className="flex gap-4">
             <button
               onClick={handleRestart}
-              className="z-10 bg-white rounded-md px-5 h-[45px] text-pink-950 shadow-pink-600/80 hover:shadow-pink-600 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
+              className="z-10 bg-white rounded-md px-5 h-[45px] text-green-950 shadow-green-700/80 hover:shadow-green-800 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
             >
               Restart
             </button>
             <button
               onClick={handleCopy}
-              className="z-10 bg-white rounded-md px-5 h-[45px] text-pink-950 shadow-pink-600/80 hover:shadow-pink-600 shadow-xl hover:scale-105 transition-all ease-in-out  flex justify-center items-center gap-2 active:scale-125"
+              className="z-10 bg-white rounded-md px-5 h-[45px] text-green-950 shadow-green-700/80 hover:shadow-green-800 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center gap-2 active:scale-125"
             >
               Copy
               <Image src={"/copy.png"} height={25} width={25} alt="Copy" />

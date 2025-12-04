@@ -5,20 +5,20 @@ import Link from "next/link";
 
 import HomeButton from "../(components)/HomeButton";
 
-export default function SofiWistINR() {
-  const [wistAmount, setWistAmount] = useState<number>(300);
-  const [ratio, setRatio] = useState<number>(2.7);
+export default function NaiINR() {
+  const [jadeAmount, setJadeAmount] = useState<number>(250);
+  const [ratio, setRatio] = useState<number>(3.1);
   const [inrAmount, setInrAmount] = useState<number>(0);
   const [isInputDisabled, setIsInputDisabled] = useState<boolean>(false);
   const [isFlipped, setIsFlipped] = useState(false);
   const [popupMessage, setPopupMessage] = useState<string | null>(null);
 
-  const handleWistAmountChange = (
+  const handlejadeAmountChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = event.target.valueAsNumber;
     if (value >= 0 || event.target.value === "") {
-      setWistAmount(Math.floor(value) || 0);
+      setJadeAmount(Math.floor(value) || 0);
     }
   };
 
@@ -30,7 +30,7 @@ export default function SofiWistINR() {
   };
 
   const handleCalculate = () => {
-    const calculatedAmount = wistAmount * ratio;
+    const calculatedAmount = jadeAmount * ratio;
     const formattedAmount = parseFloat(calculatedAmount.toFixed(2));
     setInrAmount(formattedAmount);
     setIsInputDisabled(true);
@@ -38,8 +38,8 @@ export default function SofiWistINR() {
   };
 
   const handleRestart = () => {
-    setWistAmount(300);
-    setRatio(2.7);
+    setJadeAmount(250);
+    setRatio(3.1);
     setInrAmount(0);
     setIsInputDisabled(false);
     setIsFlipped(false);
@@ -47,7 +47,7 @@ export default function SofiWistINR() {
 
   const handleCopy = () => {
     const textToCopy = `\`\`\`css
-Wist Amount: ${wistAmount} Wists
+Wist Amount: ${jadeAmount} Wists
 Ratio: ₹${ratio} per wist
 Calculated ₹ Amount: ₹${inrAmount}
 \`\`\`
@@ -97,22 +97,21 @@ Calculated ₹ Amount: ₹${inrAmount}
           <div className="relative flex justify-center items-center shadow-md shadow-green-600/60 rounded-md">
             <div className="bg-white h-full flex items-center p-2 rounded-l-md">
               <Image
-                src={"/wist_gif.gif"}
+                src={"/jade-icon.png"}
                 height={40}
                 width={40}
-                alt="Sofi Wist Gif"
-                unoptimized
+                alt="Jade Icon"
               />
             </div>
             <input
-              id="wistAmount"
+              id="jadeAmount"
               type="number"
               min="1"
               step="1"
               pattern="\d*"
               inputMode="numeric"
-              value={wistAmount}
-              onChange={handleWistAmountChange}
+              value={jadeAmount}
+              onChange={handlejadeAmountChange}
               placeholder="Enter Wist Amount"
               className={`z-10  antialiased text-center text-4xl p-2 rounded-r-md text-black w-[250px] focus:outline-none placeholder:text-2xl ${
                 isInputDisabled ? "bg-white cursor-not-allowed" : ""
@@ -142,11 +141,10 @@ Calculated ₹ Amount: ₹${inrAmount}
             </div>
             <div className="bg-white h-full w-[150px] flex items-center justify-center p-2 rounded-r-md text-black text-4xl  ">
               <Image
-                src={"/wist_gif.gif"}
+                src={"/jade-icon.png"}
                 height={40}
                 width={40}
-                alt="Sofi Wist Gif"
-                unoptimized
+                alt="Jade Icon"
               />
               1
             </div>
@@ -158,7 +156,7 @@ Calculated ₹ Amount: ₹${inrAmount}
             >
               Calculate
             </button>
-            <Link href={"/sofi-wist"}>
+            <Link href={"/nai-jade"}>
               <button className="z-10 bg-white rounded-md px-5 h-[45px] text-green-950 shadow-green-600/80 hover:shadow-green-600 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center">
                 Switch to USD
               </button>
@@ -181,7 +179,7 @@ Calculated ₹ Amount: ₹${inrAmount}
                 You are selling
                 <span className="font-bold text-lg scale-110">
                   &nbsp;
-                  {wistAmount} {wistAmount === 1 ? "Wist" : "Wists"}
+                  {jadeAmount} {jadeAmount === 1 ? "Jade" : "Jades"}
                 </span>
                 &nbsp; at the ratio of
                 <span className="font-bold text-lg scale-110">
