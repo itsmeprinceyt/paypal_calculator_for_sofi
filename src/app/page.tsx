@@ -1,316 +1,323 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
+import { useRef, useCallback } from "react";
+import { ChevronDown, ArrowUp, ExternalLink, AlertCircle } from "lucide-react";
+import PageWrapper from "./(components)/PageWrapper";
 
-import { useRef } from "react";
+interface NavButtonProps {
+  onClick: () => void;
+  direction: "down" | "up";
+}
 
-export default function Home() {
-  const Home = useRef<HTMLDivElement | null>(null);
-  const SecondPage = useRef<HTMLDivElement | null>(null);
-  const ThirdPage = useRef<HTMLDivElement | null>(null);
-  const FourthPage = useRef<HTMLDivElement | null>(null);
+interface CalculatorCardProps {
+  href: string;
+  gradient: string;
+  textColor: string;
+  shadowColor: string;
+  icon: string;
+  title: string;
+  iconSize?: number;
+  isGif?: boolean;
+}
 
-  const ScrollToHome = (): void => {
-    if (Home.current) {
-      Home.current.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+interface DiscordLinkProps {
+  href: string;
+  name: string;
+}
 
-  const ScrollToSecondPage = (): void => {
-    if (SecondPage.current) {
-      SecondPage.current.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+const NavButton = ({ onClick, direction }: NavButtonProps) => (
+  <button
+    onClick={onClick}
+    className="absolute left-1/2 bottom-8 transform -translate-x-1/2 group"
+    aria-label={`Scroll ${direction}`}
+  >
+    <div className="p-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300 group-hover:scale-110">
+      {direction === "down" ? (
+        <ChevronDown className="w-6 h-6 text-white animate-pulse hover:animate-none" />
+      ) : (
+        <ArrowUp className="w-6 h-6 text-white" />
+      )}
+    </div>
+  </button>
+);
 
-  const ScrollToThirdPage = (): void => {
-    if (ThirdPage.current) {
-      ThirdPage.current.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  const ScrollToFourthPage = (): void => {
-    if (FourthPage.current) {
-      FourthPage.current.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-  return (
-    <div className="select-none">
-      {/* First Page */}
-      <div
-        ref={Home}
-        className="relative h-screen flex flex-col justify-center items-center gap-5"
-      >
-        <div className="flex flex-col justify-center items-center gap-5">
-          <div className="text-center border-b pb-3 border-white/30">
-            <div className="sm:text-8xl text-6xl text-white font-semibold">
-              Welcome!
-            </div>
-            <div className="text-white font-extralight w-[300px] sm:w-[600px]">
-              Effortless Fee Calculations for PayPal, Sofi Wists, Karuta
-              Tickets, Mazoku Bloodstones and Nai Jades!!
-            </div>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2  gap-5 sm:gap-5">
-            <Link href={"/paypal-fee"}>
-              <div className="bg-gradient-to-r from-blue-300 to-blue-400 rounded-md px-1 h-[50px] text-blue-950 shadow-blue-600/30 hover:shadow-blue-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-start items-center gap-2">
-                <Image
-                  src={"/Paypal.gif"}
-                  height={50}
-                  width={50}
-                  alt="PayPal Gif"
-                  unoptimized
-                />
-                <div className="ml-1">PayPal Fee</div>
-              </div>
-            </Link>
-            <Link href={"/sofi-wist"}>
-              <div className="bg-gradient-to-r from-pink-300 to-pink-400 rounded-md px-3 h-[50px] text-pink-950 shadow-pink-600/30 hover:shadow-pink-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-start items-center gap-2">
-                <Image
-                  src={"/sofi-icon.gif"}
-                  height={40}
-                  width={40}
-                  alt="Sofi Wist Gif"
-                  className="rounded-lg"
-                  unoptimized
-                />
-                <div className="ml-2">Sofi Wists</div>
-              </div>
-            </Link>
-            <Link href={"/karuta-ticket"}>
-              <div className="bg-gradient-to-r from-orange-300 to-orange-400 rounded-md px-3 h-[50px] text-orange-950 shadow-orange-600/30 hover:shadow-orange-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-start items-center gap-2">
-                <Image
-                  src={"/karuta-icon.png"}
-                  height={35}
-                  width={35}
-                  alt="Karuta Logo"
-                  className="rounded-lg"
-                />
-                <div className="ml-3">Karuta Tickets</div>
-              </div>
-            </Link>
-            <Link href={"/mazoku-bloodstone"}>
-              <div className="bg-gradient-to-r from-yellow-300 to-yellow-400 rounded-md px-3 h-[50px] text-yellow-950 shadow-yellow-600/30 hover:shadow-yellow-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-start items-center gap-2">
-                <Image
-                  src={"/mazoku-icon.png"}
-                  height={35}
-                  width={35}
-                  alt="Mazoku Logo"
-                  className="rounded-lg"
-                />
-                <div className="ml-3">Mazoku Bloodstones</div>
-              </div>
-            </Link>
-            <Link href={"/nai-jade"}>
-              <div className="bg-gradient-to-r from-green-300 to-green-400 rounded-md px-3 h-[50px] text-green-950 shadow-green-600/30 hover:shadow-green-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-start items-center gap-2">
-                <Image
-                  src={"/nai-icon.png"}
-                  height={35}
-                  width={35}
-                  alt="Nai Logo"
-                  className="rounded-lg"
-                />
-                <div className="ml-3">Nai Jades</div>
-              </div>
-            </Link>
-          </div>
-        </div>
-        <div className="text-white text-xs animate-pulse font-extralight text-center w-[250px] sm:w-[600px]">
-          Default values do not determine the market rates! Please do your own
-          study!
-        </div>
-        <button onClick={ScrollToSecondPage}>
+const CalculatorCard = ({
+  href,
+  gradient,
+  textColor,
+  shadowColor,
+  icon,
+  title,
+  iconSize = 40,
+  isGif = false,
+}: CalculatorCardProps) => (
+  <Link href={href} className="block group">
+    <div
+      className={`relative overflow-hidden ${gradient} rounded-xl px-2 py-2 ${textColor} shadow-xl hover:shadow-2xl transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-1`}
+      style={{ boxShadow: `0 20px 30px -10px ${shadowColor}` }}
+    >
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700" />
+      <div className="flex items-center gap-3">
+        <div className="relative w-10 h-10 flex-shrink-0 rounded-lg">
           <Image
-            className="absolute left-1/2 bottom-[30px] transform -translate-x-1/2 animate-pulse hover:animate-none hover:scale-110 transition-all duration-300 ease-in-out"
-            src="/down-arrow_white.png"
-            height={50}
-            width={50}
-            alt="arrow"
+            src={icon}
+            fill
+            sizes="40px"
+            className={`object-contain rounded-lg`}
+            alt={title}
+            unoptimized={isGif}
           />
-        </button>
-      </div>
-
-      {/* Second Page */}
-      <div
-        ref={SecondPage}
-        className="relative h-screen flex justify-center items-center"
-      >
-        <div className="flex flex-col justify-center items-center gap-3">
-          <div className="text-center flex flex-col gap-2">
-            <div className="p-3 text-xl text-white font-extralight w-[400px] sm:w-[600px] border-b border-white/30">
-              You can watch the video in which I&apos;ve explained about this
-              project!
-            </div>
-            <div className="responsive-video">
-              <iframe
-                src="https://www.youtube.com/embed/TmGlgE4iUN4?si=0uv-ugOXFzfnhE7_"
-                title="YouTube video player"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              ></iframe>
-            </div>
-          </div>
         </div>
-        <button onClick={ScrollToThirdPage}>
-          <Image
-            className="absolute left-1/2 bottom-[30px] transform -translate-x-1/2 animate-pulse hover:animate-none hover:scale-110 transition-all duration-300 ease-in-out"
-            src="/down-arrow_white.png"
-            height={50}
-            width={50}
-            alt="arrow"
-          />
-        </button>
-      </div>
-
-      {/* Third Page */}
-      <div
-        ref={ThirdPage}
-        className="relative h-screen flex justify-center items-center"
-      >
-        <div className="flex flex-col justify-center items-center gap-3">
-          <div className="text-center flex flex-col gap-2">
-            <div className="pb-4 text-white text-4xl border-b border-white/30">
-              Disclaimer
-            </div>
-            <div className="p-3 pb-4 text-xl text-purple-500 font-extralight w-[400px] sm:w-[600px] border-b border-white/30">
-              This website is intended solely for educational purposes. I do not
-              support or encourage cross-trading in Sofi, Karuta, or Mazoku, as
-              it is against the rules. Any actions you take within Sofi, Karuta,
-              or Mazoku, including cross-trading or related activities, are your
-              responsibility. I am not accountable for any outcomes or issues
-              that may arise from engaging in this playstyle. Please note that
-              all transactions and outcomes are your responsibility.
-            </div>
-            <div className="text-white font-extralight">
-              Discord Servers you can join!!
-            </div>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-5 sm:gap-10">
-            <Link href={"https://discord.gg/HgXNs4p5cx"} target="_blank">
-              <div className="bg-purple-200 rounded-md px-3 h-[50px] text-purple-950 shadow-purple-600/30 hover:shadow-purple-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-start items-center">
-                <Image
-                  src={"/Discord.gif"}
-                  height={50}
-                  width={50}
-                  alt="Discord Gif"
-                  unoptimized
-                />
-                ItsMe Prince
-              </div>
-            </Link>
-            <Link href={"https://discord.gg/sofi"} target="_blank">
-              <div className="bg-purple-200 rounded-md px-3 h-[50px] text-purple-950 shadow-purple-600/30 hover:shadow-purple-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-start items-center">
-                <Image
-                  src={"/Discord.gif"}
-                  height={50}
-                  width={50}
-                  alt="Discord Gif"
-                  unoptimized
-                />
-                Sofi Cafe
-              </div>
-            </Link>
-            <Link href={"https://discord.gg/soficorner"} target="_blank">
-              <div className="bg-purple-200 rounded-md px-3 h-[50px] text-purple-950 shadow-purple-600/30 hover:shadow-purple-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-start items-center">
-                <Image
-                  src={"/Discord.gif"}
-                  height={50}
-                  width={50}
-                  alt="Discord Gif"
-                  unoptimized
-                />
-                The Corner
-              </div>
-            </Link>
-            <Link href={"https://discord.gg/karuta"} target="_blank">
-              <div className="bg-purple-200 rounded-md px-3 h-[50px] text-purple-950 shadow-purple-600/30 hover:shadow-purple-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-start items-center">
-                <Image
-                  src={"/Discord.gif"}
-                  height={50}
-                  width={50}
-                  alt="Discord Gif"
-                  unoptimized
-                />
-                Karuta Hub
-              </div>
-            </Link>
-            <Link href={"https://discord.gg/cove"} target="_blank">
-              <div className="bg-purple-200 rounded-md px-3 h-[50px] text-purple-950 shadow-purple-600/30 hover:shadow-purple-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-start items-center">
-                <Image
-                  src={"/Discord.gif"}
-                  height={50}
-                  width={50}
-                  alt="Discord Gif"
-                  unoptimized
-                />
-                Egg Cove
-              </div>
-            </Link>
-            <Link href={"https://discord.gg/mazoku"} target="_blank">
-              <div className="bg-purple-200 rounded-md px-3 h-[50px] text-purple-950 shadow-purple-600/30 hover:shadow-purple-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-start items-center">
-                <Image
-                  src={"/Discord.gif"}
-                  height={50}
-                  width={50}
-                  alt="Discord Gif"
-                  unoptimized
-                />
-                Mazoku Legacy
-              </div>
-            </Link>
-            <Link href={"https://discord.gg/nai"} target="_blank">
-              <div className="bg-purple-200 rounded-md px-3 h-[50px] text-purple-950 shadow-purple-600/30 hover:shadow-purple-600/50 shadow-xl hover:scale-110 transition-all ease-in-out duration-500 flex justify-start items-center">
-                <Image
-                  src={"/Discord.gif"}
-                  height={50}
-                  width={50}
-                  alt="Discord Gif"
-                  unoptimized
-                />
-                Nairi&apos; Basement
-              </div>
-            </Link>
-          </div>
-        </div>
-        <button onClick={ScrollToFourthPage}>
-          <Image
-            className="absolute left-1/2 bottom-[30px] transform -translate-x-1/2 animate-pulse hover:animate-none hover:scale-110 transition-all duration-300 ease-in-out"
-            src="/down-arrow_white.png"
-            height={50}
-            width={50}
-            alt="arrow"
-          />
-        </button>
-      </div>
-
-      {/* Fourth Page */}
-      <div
-        ref={FourthPage}
-        className="relative h-screen flex justify-center items-center"
-      >
-        <div className="flex flex-col justify-center items-center gap-3">
-          <div className="text-center flex flex-col gap-2">
-            <div className="p-3 text-4xl text-white w-[400px] sm:w-[600px] ">
-              Thank You For Visiting!
-            </div>
-          </div>
-        </div>
-
-        <div className="absolute left-1/2 bottom-[30px] transform -translate-x-1/2 animate-pulse hover:animate-none hover:scale-110 transition-all duration-300 ease-in-out ">
-          <button
-            onClick={ScrollToHome}
-            className="button-3d w-[50px] h-[50px] hover:h-[40px] rounded-full border-none font-semibold flex items-center justify-center cursor-pointer duration-300 overflow-hidden relative hover:w-[140px] hover:rounded-full hover:items-center hover:bg-white hover:text-black "
-          >
-            <Image
-              className="arrow-tooltip duration-300"
-              src="/down-arrow_white.png"
-              height={50}
-              width={50}
-              alt="arrow"
-            />
-          </button>
-        </div>
+        <p className="font-medium text-sm sm:text-base">{title}</p>
       </div>
     </div>
+  </Link>
+);
+
+const DiscordLink = ({ href, name }: DiscordLinkProps) => (
+  <Link
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="block group"
+  >
+    <div className="bg-purple-200/90 hover:bg-purple-200 rounded-xl px-2 py-1 text-purple-950 shadow-lg hover:shadow-purple-600/30 transition-all duration-300 group-hover:scale-105 flex items-center gap-3">
+      <div className="relative w-10 h-10 flex-shrink-0">
+        <Image
+          src="/Discord.gif"
+          fill
+          sizes="32px"
+          className="object-contain"
+          alt="Discord"
+          unoptimized
+        />
+      </div>
+      <span className="flex-1 text-sm font-medium">{name}</span>
+      <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+    </div>
+  </Link>
+);
+
+export default function Home() {
+  const sections = {
+    home: useRef<HTMLDivElement>(null),
+    video: useRef<HTMLDivElement>(null),
+    disclaimer: useRef<HTMLDivElement>(null),
+    thankYou: useRef<HTMLDivElement>(null),
+  };
+
+  const scrollToSection = useCallback(
+    (ref: React.RefObject<HTMLDivElement | null>) => {
+      if (ref.current) {
+        ref.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    },
+    []
+  );
+
+  const calculatorCards: CalculatorCardProps[] = [
+    {
+      href: "/paypal-fee",
+      gradient: "bg-gradient-to-r from-blue-300 to-blue-400",
+      textColor: "text-blue-950",
+      shadowColor: "rgba(37, 99, 235, 0.3)",
+      icon: "/Paypal.gif",
+      title: "PayPal Fee",
+      isGif: true,
+    },
+    {
+      href: "/sofi-wist",
+      gradient: "bg-gradient-to-r from-pink-300 to-pink-400",
+      textColor: "text-pink-950",
+      shadowColor: "rgba(219, 39, 119, 0.3)",
+      icon: "/sofi-icon.gif",
+      title: "Sofi Wists",
+      isGif: true,
+    },
+    {
+      href: "/karuta-ticket",
+      gradient: "bg-gradient-to-r from-orange-300 to-orange-400",
+      textColor: "text-orange-950",
+      shadowColor: "rgba(234, 88, 12, 0.3)",
+      icon: "/karuta-icon.png",
+      title: "Karuta Tickets",
+    },
+    {
+      href: "/mazoku-bloodstone",
+      gradient: "bg-gradient-to-r from-yellow-300 to-yellow-400",
+      textColor: "text-yellow-950",
+      shadowColor: "rgba(202, 138, 4, 0.3)",
+      icon: "/mazoku-icon.png",
+      title: "Mazoku Bloodstones",
+    },
+    {
+      href: "/nai-jade",
+      gradient: "bg-gradient-to-r from-green-300 to-green-400",
+      textColor: "text-green-950",
+      shadowColor: "rgba(22, 163, 74, 0.3)",
+      icon: "/nai-icon.png",
+      title: "Nai Jades",
+    },
+  ];
+
+  const discordLinks: DiscordLinkProps[] = [
+    { href: "https://discord.gg/HgXNs4p5cx", name: "ItsMe Prince" },
+    { href: "https://discord.gg/sofi", name: "Sofi Cafe" },
+    { href: "https://discord.gg/soficorner", name: "The Corner" },
+    { href: "https://discord.gg/karuta", name: "Karuta Hub" },
+    { href: "https://discord.gg/cove", name: "Egg Cove" },
+    { href: "https://discord.gg/mazoku", name: "Mazoku Legacy" },
+    { href: "https://discord.gg/nai", name: "Nairi's Basement" },
+    { href: "https://discord.gg/jsWxmgBFDB", name: "Juice Box" },
+    { href: "https://discord.gg/RrewX8Sw5P", name: "The Hangout" },
+  ];
+
+  return (
+    <main className="select-none">
+      {/* Hero Section */}
+      <PageWrapper>
+        <section
+          ref={sections.home}
+          className="relative min-h-screen flex flex-col justify-center items-center px-4 py-12"
+        >
+          <div className="max-w-4xl mx-auto text-center space-y-8">
+            <div className="space-y-4">
+              <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold text-white tracking-tight">
+                Welcome!
+              </h1>
+              <p className="text-white/80 text-sm sm:text-base max-w-2xl mx-auto font-light leading-relaxed">
+                Effortless Fee Calculations for PayPal, Sofi Wists, Karuta
+                Tickets, Mazoku Bloodstones and Nai Jades!!
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto">
+              {calculatorCards.map((card) => (
+                <CalculatorCard key={card.href} {...card} />
+              ))}
+            </div>
+
+            <div className="flex items-center justify-center gap-2 text-white/60 text-xs sm:text-sm font-light">
+              <AlertCircle className="w-4 h-4" />
+              <span>
+                Default values do not determine the market rates! Please do your
+                own study!
+              </span>
+            </div>
+          </div>
+
+          <NavButton
+            onClick={() => scrollToSection(sections.video)}
+            direction="down"
+          />
+        </section>
+      </PageWrapper>
+
+      {/* Video Section */}
+      <PageWrapper>
+        <section
+          ref={sections.video}
+          className="relative min-h-screen flex flex-col justify-center items-center px-4 py-12"
+        >
+          <div className="w-full max-w-7xl mx-auto text-center space-y-8">
+            <div className="space-y-6">
+              <h2 className="text-white/80 text-xl sm:text-2xl font-light border-b border-white/30 pb-4 inline-block">
+                Watch the project explanation
+              </h2>
+
+              {/* Bigger video container - using full width with max-w-6xl */}
+              <div className="relative aspect-video w-full max-w-6xl mx-auto rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10">
+                <iframe
+                  src="https://www.youtube.com/embed/TmGlgE4iUN4?si=0uv-ugOXFzfnhE7_"
+                  title="Project Explanation Video"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full"
+                />
+              </div>
+
+              {/* Optional: Add a subtle caption */}
+              <p className="text-white/50 text-sm mt-2">
+                Full explanation of all calculators and how to use them
+              </p>
+            </div>
+          </div>
+
+          <NavButton
+            onClick={() => scrollToSection(sections.disclaimer)}
+            direction="down"
+          />
+        </section>
+      </PageWrapper>
+
+      {/* Disclaimer Section */}
+      <PageWrapper>
+        <section
+          ref={sections.disclaimer}
+          className="relative min-h-screen flex flex-col justify-center items-center px-4 py-12"
+        >
+          <div className="max-w-4xl mx-auto text-center space-y-8">
+            <div className="space-y-6">
+              <h2 className="text-4xl sm:text-5xl font-bold text-white border-b border-white/30 pb-4 inline-block">
+                Disclaimer
+              </h2>
+
+              <div className="bg-purple-500/10 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-purple-500/20">
+                <p className="text-purple-300 text-sm sm:text-base leading-relaxed font-light">
+                  This website is intended solely for educational purposes. I do
+                  not support or encourage cross-trading in Sofi, Karuta, or
+                  Mazoku, as it is against the rules. Any actions you take
+                  within these games, including cross-trading or related
+                  activities, are your responsibility. I am not accountable for
+                  any outcomes or issues that may arise from engaging in this
+                  playstyle.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <h3 className="text-white/80 text-lg sm:text-xl font-light flex items-center justify-center gap-2">
+                  Discord Servers you can join!
+                </h3>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-w-2xl mx-auto">
+                  {discordLinks.map((link) => (
+                    <DiscordLink key={link.href} {...link} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <NavButton
+            onClick={() => scrollToSection(sections.thankYou)}
+            direction="down"
+          />
+        </section>
+      </PageWrapper>
+
+      {/* Thank You Section */}
+      <PageWrapper>
+        <section
+          ref={sections.thankYou}
+          className="relative min-h-screen flex flex-col justify-center items-center px-4 py-12"
+        >
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-8">
+              Thank You For Visiting!
+            </h2>
+
+            <button
+              onClick={() => scrollToSection(sections.home)}
+              className="group relative inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full text-white border border-white/20 transition-all duration-300 hover:scale-105"
+            >
+              <ArrowUp className="w-5 h-5 group-hover:-translate-y-1 transition-transform" />
+              <span>Back to Top</span>
+            </button>
+          </div>
+        </section>
+      </PageWrapper>
+    </main>
   );
 }

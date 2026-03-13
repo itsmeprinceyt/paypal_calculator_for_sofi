@@ -6,8 +6,8 @@ export default function HomeButton() {
       <Link href="/">
         <Image
           src={"/home.png"}
-          height={50}
-          width={50}
+          height={30}
+          width={30}
           className="invert"
           alt="Home"
         />
