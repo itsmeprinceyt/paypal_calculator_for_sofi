@@ -2,8 +2,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Copy, RotateCcw, ArrowRight } from "lucide-react";
 import { calculateFeeAndRecipientAmount } from "../../utils/calculateFee";
-import HomeButton from "../(components)/HomeButton";
 import PageWrapper from "../(components)/PageWrapper";
+import TopRightMenu from "../(components)/TopRightMenu";
 
 export default function PayPalFee() {
   const [inputAmount, setInputAmount] = useState<number>(100);
@@ -13,7 +13,7 @@ export default function PayPalFee() {
     paymentToReceive: number;
   } | null>(null);
   const [isInputDisabled, setIsInputDisabled] = useState<boolean>(false);
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [isFlipped, setIsFlipped] = useState<boolean>(false);
   const [toast, setToast] = useState<string | null>(null);
   const [focused, setFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -125,7 +125,7 @@ To receive $${inputAmount.toFixed(2)}: USD$ ${result.paymentToReceive.toFixed(
   return (
     <PageWrapper>
       <div className="min-h-screen flex items-center justify-center p-4">
-        <HomeButton />
+        <TopRightMenu onlyHome currency={"inr"} href={"/"} />
 
         <div
           className={`fixed top-5 left-1/2 -translate-x-1/2 bg-white text-[#0a0a0f] font-mono text-[12px] tracking-[0.06em] px-[22px] py-[10px] rounded-full z-50 pointer-events-none whitespace-nowrap ${

@@ -6,7 +6,7 @@ import MadeBy from "./(components)/AboutMe";
 import CustomLoader from "./(components)/CustomLoader";
 
 export const metadata: Metadata = {
-  title: "Fee Calculator - PayPal, Sofi, Karuta, Nai, Mazoku",
+  title: "Fee Calculator - PayPal, Sofi, Karuta, Nai, Mazoku | ItsMe Prince",
   description:
     "Quick and easy fee calculators for PayPal, Sofi wists, Karuta tickets, Nai Jades and Mazoku bloodstones. Perfect for Discord gamers.",
   keywords:
