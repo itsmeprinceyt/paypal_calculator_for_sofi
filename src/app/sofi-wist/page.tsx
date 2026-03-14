@@ -184,7 +184,7 @@ Amount with Tax included: USD$ ${result.paymentToReceive.toFixed(2)}
 
         {/* 3D Card Scene */}
         <div
-          className="w-full max-w-[580px] h-[520px] sm:h-[560px] md:h-[600px]"
+          className="w-full max-w-[580px] h-[400px] sm:h-[440px] md:h-[480px]"
           style={{ perspective: "1200px" }}
         >
           <div
