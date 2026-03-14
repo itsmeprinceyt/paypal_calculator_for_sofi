@@ -1,19 +1,18 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { Copy, RotateCcw, ArrowRight } from "lucide-react";
-import Link from "next/link";
-import HomeButton from "../(components)/HomeButton";
 import PageWrapper from "../(components)/PageWrapper";
+import TopRightMenu from "../(components)/TopRightMenu";
 
 export default function KarutaTicketINR() {
   const [ticketAmount, setTicketAmount] = useState<number>(120);
   const [ratio, setRatio] = useState<number>(4.5);
   const [inrAmount, setInrAmount] = useState<number>(0);
   const [isInputDisabled, setIsInputDisabled] = useState<boolean>(false);
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [isFlipped, setIsFlipped] = useState<boolean>(false);
   const [toast, setToast] = useState<string | null>(null);
-  const [focusedTicket, setFocusedTicket] = useState(false);
-  const [focusedRatio, setFocusedRatio] = useState(false);
+  const [focusedTicket, setFocusedTicket] = useState<boolean>(false);
+  const [focusedRatio, setFocusedRatio] = useState<boolean>(false);
   const ticketInputRef = useRef<HTMLInputElement>(null);
   const ratioInputRef = useRef<HTMLInputElement>(null);
 
@@ -157,16 +156,7 @@ Calculated ₹ Amount: ₹${inrAmount.toFixed(2)}
   return (
     <PageWrapper>
       <div className="min-h-screen flex items-center justify-center p-4">
-        <HomeButton />
-
-        {/* USD Calculator Button */}
-        <Link
-          href="/karuta-ticket"
-          className="fixed top-5 right-5 z-50 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full px-4 py-2 font-mono text-sm text-white/80 hover:text-white transition-all duration-200 flex items-center gap-2 backdrop-blur-sm"
-        >
-          <span className="text-blue-400">$</span>
-          USD Calculator
-        </Link>
+        <TopRightMenu currency={"usd"} href={"/karuta-ticket"} />
 
         <div
           className={`fixed top-5 left-1/2 -translate-x-1/2 bg-white text-[#0a0a0f] font-mono text-[12px] tracking-[0.06em] px-[22px] py-[10px] rounded-full z-50 pointer-events-none whitespace-nowrap ${

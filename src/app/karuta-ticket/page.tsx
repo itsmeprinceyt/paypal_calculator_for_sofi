@@ -1,10 +1,9 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { Copy, RotateCcw, ArrowRight } from "lucide-react";
-import Link from "next/link";
-import { calculateFeeAndRecipientAmount } from "@/utils/calculateFee";
-import HomeButton from "../(components)/HomeButton";
+import { calculateFeeAndRecipientAmount } from "../../utils/calculateFee";
 import PageWrapper from "../(components)/PageWrapper";
+import TopRightMenu from "../(components)/TopRightMenu";
 
 export default function KarutaTicket() {
   const [ticketAmount, setTicketAmount] = useState<number>(140);
@@ -16,10 +15,10 @@ export default function KarutaTicket() {
   } | null>(null);
   const [isInputDisabled, setIsInputDisabled] = useState<boolean>(false);
   const [dollarAmount, setDollarAmount] = useState<number>(0);
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [isFlipped, setIsFlipped] = useState<boolean>(false);
   const [toast, setToast] = useState<string | null>(null);
-  const [focusedTicket, setFocusedTicket] = useState(false);
-  const [focusedRatio, setFocusedRatio] = useState(false);
+  const [focusedTicket, setFocusedTicket] = useState<boolean>(false);
+  const [focusedRatio, setFocusedRatio] = useState<boolean>(false);
   const ticketInputRef = useRef<HTMLInputElement>(null);
   const ratioInputRef = useRef<HTMLInputElement>(null);
 
@@ -167,16 +166,7 @@ Amount with Tax:       USD$ ${result.paymentToReceive.toFixed(2)}
   return (
     <PageWrapper>
       <div className="min-h-screen flex items-center justify-center p-4">
-        <HomeButton />
-
-        {/* INR Route Button */}
-        <Link
-          href="/karuta-ticket-inr"
-          className="fixed top-5 right-5 z-50 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full px-4 py-2 font-mono text-sm text-white/80 hover:text-white transition-all duration-200 flex items-center gap-2 backdrop-blur-sm"
-        >
-          <span className="text-green-400">₹</span>
-          INR Calculator
-        </Link>
+        <TopRightMenu currency={"inr"} href={"/karuta-ticket-inr"} />
 
         <div
           className={`fixed top-5 left-1/2 -translate-x-1/2 bg-white text-[#0a0a0f] font-mono text-[12px] tracking-[0.06em] px-[22px] py-[10px] rounded-full z-50 pointer-events-none whitespace-nowrap ${

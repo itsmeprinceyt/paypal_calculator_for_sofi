@@ -4,27 +4,11 @@ import Image from "next/image";
 import { useRef, useCallback } from "react";
 import { ChevronDown, ArrowUp, ExternalLink, AlertCircle } from "lucide-react";
 import PageWrapper from "./(components)/PageWrapper";
-
-interface NavButtonProps {
-  onClick: () => void;
-  direction: "down" | "up";
-}
-
-interface CalculatorCardProps {
-  href: string;
-  gradient: string;
-  textColor: string;
-  shadowColor: string;
-  icon: string;
-  title: string;
-  iconSize?: number;
-  isGif?: boolean;
-}
-
-interface DiscordLinkProps {
-  href: string;
-  name: string;
-}
+import {
+  CalculatorCardProps,
+  DiscordLinkProps,
+  NavButtonProps,
+} from "../types/HomePage.type";
 
 const NavButton = ({ onClick, direction }: NavButtonProps) => (
   <button
