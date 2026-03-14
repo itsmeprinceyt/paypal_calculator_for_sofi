@@ -223,7 +223,7 @@ To receive $${inputAmount.toFixed(2)}: USD$ ${result.paymentToReceive.toFixed(
                 <>
                   {/* Summary */}
                   <p className="font-mono text-center text-[13px] text-white/45 leading-[1.8] italic">
-                    If you're sending{" "}
+                    If you&apos;re sending{" "}
                     <strong className="text-white not-italic">
                       ${inputAmount.toFixed(2)}
                     </strong>

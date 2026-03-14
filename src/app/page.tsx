@@ -49,7 +49,6 @@ const CalculatorCard = ({
   shadowColor,
   icon,
   title,
-  iconSize = 40,
   isGif = false,
 }: CalculatorCardProps) => (
   <Link href={href} className="block group">
@@ -174,9 +173,9 @@ export default function Home() {
   ];
 
   return (
-    <main className="select-none">
-      {/* Hero Section */}
-      <PageWrapper>
+    <PageWrapper>
+      <main className="select-none">
+        {/* Hero Section */}
         <section
           ref={sections.home}
           className="relative min-h-screen flex flex-col justify-center items-center px-4 py-12"
@@ -212,10 +211,8 @@ export default function Home() {
             direction="down"
           />
         </section>
-      </PageWrapper>
 
-      {/* Video Section */}
-      <PageWrapper>
+        {/* Video Section */}
         <section
           ref={sections.video}
           className="relative min-h-screen flex flex-col justify-center items-center px-4 py-12"
@@ -250,10 +247,8 @@ export default function Home() {
             direction="down"
           />
         </section>
-      </PageWrapper>
 
-      {/* Disclaimer Section */}
-      <PageWrapper>
+        {/* Disclaimer Section */}
         <section
           ref={sections.disclaimer}
           className="relative min-h-screen flex flex-col justify-center items-center px-4 py-12"
@@ -281,7 +276,7 @@ export default function Home() {
                   Discord Servers you can join!
                 </h3>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-w-2xl mx-auto">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-w-2xl mx-auto pb-14">
                   {discordLinks.map((link) => (
                     <DiscordLink key={link.href} {...link} />
                   ))}
@@ -295,10 +290,8 @@ export default function Home() {
             direction="down"
           />
         </section>
-      </PageWrapper>
 
-      {/* Thank You Section */}
-      <PageWrapper>
+        {/* Thank You Section */}
         <section
           ref={sections.thankYou}
           className="relative min-h-screen flex flex-col justify-center items-center px-4 py-12"
@@ -317,7 +310,7 @@ export default function Home() {
             </button>
           </div>
         </section>
-      </PageWrapper>
-    </main>
+      </main>
+    </PageWrapper>
   );
 }

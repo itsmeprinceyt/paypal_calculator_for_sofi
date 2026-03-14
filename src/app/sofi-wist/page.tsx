@@ -4,6 +4,7 @@ import { Copy, RotateCcw, ArrowRight } from "lucide-react";
 import { calculateFeeAndRecipientAmount } from "@/utils/calculateFee";
 import HomeButton from "../(components)/HomeButton";
 import PageWrapper from "../(components)/PageWrapper";
+import Link from "next/link";
 
 export default function SofiWist() {
   const [wistAmount, setWistAmount] = useState<number>(280);
@@ -101,33 +102,32 @@ export default function SofiWist() {
   };
 
   const handleCopy = async () => {
-    if (result) {
-      const textToCopy = `\`\`\`css
-Wist Amount: ${wistAmount} Wists
-Ratio: ${ratio} : $1
-Calculated $ Amount: USD$ ${dollarAmount.toFixed(2)}
-Amount without Tax: USD$ ${result.recipientAmount.toFixed(2)}
+    if (!result) return;
+    const text = `\`\`\`css
+Wist Amount:              ${wistAmount} Wists
+Ratio:                    ${ratio} : $1
+Calculated $ Amount:      USD$ ${dollarAmount.toFixed(2)}
+Amount without Tax:       USD$ ${result.recipientAmount.toFixed(2)}
 Amount with Tax included: USD$ ${result.paymentToReceive.toFixed(2)}
 \`\`\`
 -# Calculated Using: [PayPal | Sofi | Karuta | Mazoku Fee Calculator by ItsMe Prince](https://paypal-and-sofi-wist-fee-calculator.vercel.app/)`;
 
+    try {
+      await navigator.clipboard.writeText(text);
+      setToast("Copied to clipboard");
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.cssText = "position:absolute;left:-9999px";
+      document.body.appendChild(ta);
+      ta.select();
       try {
-        await navigator.clipboard.writeText(textToCopy);
+        document.execCommand("copy");
         setToast("Copied to clipboard");
-      } catch {
-        const ta = document.createElement("textarea");
-        ta.value = textToCopy;
-        ta.style.cssText = "position:absolute;left:-9999px";
-        document.body.appendChild(ta);
-        ta.select();
-        try {
-          document.execCommand("copy");
-          setToast("Copied to clipboard");
-        } catch (err) {
-          console.error("Copy failed", err);
-        }
-        document.body.removeChild(ta);
+      } catch (err) {
+        console.error("Copy failed", err);
       }
+      document.body.removeChild(ta);
     }
   };
 
@@ -140,17 +140,7 @@ Amount with Tax included: USD$ ${result.paymentToReceive.toFixed(2)}
   const breakdownRows = result
     ? [
         {
-          label: "Wist Amount",
-          value: `${wistAmount} ${wistAmount === 1 ? "Wist" : "Wists"}`,
-          colorClass: "text-white",
-        },
-        {
-          label: "Ratio",
-          value: `${ratio} : $1`,
-          colorClass: "text-white",
-        },
-        {
-          label: "USD Value",
+          label: "Amount sent",
           value: `$${dollarAmount.toFixed(2)}`,
           colorClass: "text-white",
         },
@@ -169,8 +159,17 @@ Amount with Tax included: USD$ ${result.paymentToReceive.toFixed(2)}
 
   return (
     <PageWrapper>
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center p-4">
         <HomeButton />
+
+        {/* INR Route Button */}
+        <Link
+          href="/sofi-wist-inr"
+          className="fixed top-5 right-5 z-50 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full px-4 py-2 font-mono text-sm text-white/80 hover:text-white transition-all duration-200 flex items-center gap-2 backdrop-blur-sm"
+        >
+          <span className="text-green-400">₹</span>
+          INR Calculator
+        </Link>
 
         <div
           className={`fixed top-5 left-1/2 -translate-x-1/2 bg-white text-[#0a0a0f] font-mono text-[12px] tracking-[0.06em] px-[22px] py-[10px] rounded-full z-50 pointer-events-none whitespace-nowrap ${
@@ -185,7 +184,7 @@ Amount with Tax included: USD$ ${result.paymentToReceive.toFixed(2)}
 
         {/* 3D Card Scene */}
         <div
-          className="w-full max-w-[580px] h-[580px]"
+          className="w-full max-w-[580px] h-[520px] sm:h-[560px] md:h-[600px]"
           style={{ perspective: "1200px" }}
         >
           <div
@@ -198,7 +197,7 @@ Amount with Tax included: USD$ ${result.paymentToReceive.toFixed(2)}
           >
             {/* ─── FRONT ─── */}
             <div
-              className="absolute inset-0 rounded-3xl bg-[#0a0a0a] border border-white/[0.07] p-10 flex flex-col items-center justify-center gap-7"
+              className="absolute inset-0 rounded-3xl bg-[#0000003b] border border-white/[0.07] p-6 sm:p-8 md:p-10 flex flex-col items-center justify-center gap-4 sm:gap-5 md:gap-7"
               style={{
                 backfaceVisibility: "hidden",
                 WebkitBackfaceVisibility: "hidden",
@@ -211,10 +210,7 @@ Amount with Tax included: USD$ ${result.paymentToReceive.toFixed(2)}
               </div>
 
               {/* Wist Amount Input */}
-              <div className="w-full space-y-3">
-                <span className="font-mono text-xs text-white/50 tracking-wider pl-1">
-                  Enter wist amount
-                </span>
+              <div className="w-full">
                 <div
                   className={`flex items-center rounded-[14px] bg-white/[0.04] border transition-colors duration-200 ${
                     focusedWist ? "border-pink-500/60" : "border-white/10"
@@ -245,10 +241,7 @@ Amount with Tax included: USD$ ${result.paymentToReceive.toFixed(2)}
               </div>
 
               {/* Ratio Input */}
-              <div className="w-full space-y-3">
-                <span className="font-mono text-xs text-white/50 tracking-wider pl-1">
-                  Enter ratio (wists per $1)
-                </span>
+              <div className="w-full">
                 <div
                   className={`flex items-center rounded-[14px] bg-white/[0.04] border transition-colors duration-200 ${
                     focusedRatio ? "border-pink-500/60" : "border-white/10"
@@ -298,7 +291,7 @@ Amount with Tax included: USD$ ${result.paymentToReceive.toFixed(2)}
 
             {/* ─── BACK ─── */}
             <div
-              className="absolute inset-0 rounded-3xl bg-[#070707] border border-white/[0.07] px-10 py-8 flex flex-col items-start justify-center gap-5"
+              className="absolute inset-0 rounded-3xl bg-[#0000005e] border border-white/[0.07] px-4 sm:px-6 md:px-10 py-4 sm:py-6 md:py-8 flex flex-col items-start justify-center gap-3 sm:gap-4 md:gap-5"
               style={{
                 backfaceVisibility: "hidden",
                 WebkitBackfaceVisibility: "hidden",
@@ -310,7 +303,7 @@ Amount with Tax included: USD$ ${result.paymentToReceive.toFixed(2)}
                   {/* Summary */}
                   <p className="font-mono text-center text-[13px] text-white/45 leading-[1.8] italic">
                     You are selling{" "}
-                    <strong className="text-white not-italic">
+                    <strong className="text-pink-400 not-italic">
                       {wistAmount} {wistAmount === 1 ? "Wist" : "Wists"}
                     </strong>{" "}
                     at{" "}
@@ -325,7 +318,15 @@ Amount with Tax included: USD$ ${result.paymentToReceive.toFixed(2)}
                     <strong className="text-red-400 not-italic">
                       ${result.fee.toFixed(2)}
                     </strong>{" "}
-                    will be charged as fee.
+                    will be charged as fee. To receive{" "}
+                    <strong className="text-white not-italic">
+                      ${dollarAmount.toFixed(2)}
+                    </strong>
+                    , ask them to send{" "}
+                    <strong className="text-white not-italic">
+                      ${result.paymentToReceive.toFixed(2)}
+                    </strong>{" "}
+                    to you.
                   </p>
 
                   {/* Breakdown */}
@@ -333,7 +334,7 @@ Amount with Tax included: USD$ ${result.paymentToReceive.toFixed(2)}
                     {breakdownRows.map((row, i) => (
                       <div
                         key={i}
-                        className="flex justify-between items-center px-[18px] py-3 border-b border-white/[0.05] last:border-b-0"
+                        className="flex justify-between items-center px-[18px] py-3"
                       >
                         <span className="font-mono text-[12px] text-white/35 tracking-[0.04em]">
                           {row.label}
@@ -347,11 +348,11 @@ Amount with Tax included: USD$ ${result.paymentToReceive.toFixed(2)}
                     ))}
 
                     {/* Highlighted row */}
-                    <div className="flex justify-between items-center px-[18px] py-[14px] bg-pink-500/20 border-t border-pink-500/30">
-                      <span className="font-mono text-[12px] text-pink-300/70 tracking-[0.04em]">
+                    <div className="flex justify-between items-center px-[18px] py-[14px] bg-white border-t border-pink-500/[0.15]">
+                      <span className="font-mono text-[12px] text-black tracking-[0.04em]">
                         To receive ${dollarAmount.toFixed(2)}, ask for
                       </span>
-                      <span className="font-sans text-[18px] font-extrabold text-pink-300 tracking-[-0.01em]">
+                      <span className="font-sans text-[18px] font-extrabold text-black tracking-[-0.01em]">
                         ${result.paymentToReceive.toFixed(2)}
                       </span>
                     </div>
