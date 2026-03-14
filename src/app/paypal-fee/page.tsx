@@ -1,9 +1,9 @@
 "use client";
-import { useState } from "react";
-import Image from "next/image";
-
-import { calculateFeeAndRecipientAmount } from "@/utils/calculateFee";
+import { useState, useEffect, useRef } from "react";
+import { Copy, RotateCcw, ArrowRight } from "lucide-react";
+import { calculateFeeAndRecipientAmount } from "../../utils/calculateFee";
 import HomeButton from "../(components)/HomeButton";
+import PageWrapper from "../(components)/PageWrapper";
 
 export default function PayPalFee() {
   const [inputAmount, setInputAmount] = useState<number>(100);
@@ -14,19 +14,44 @@ export default function PayPalFee() {
   } | null>(null);
   const [isInputDisabled, setIsInputDisabled] = useState<boolean>(false);
   const [isFlipped, setIsFlipped] = useState(false);
-  const [popupMessage, setPopupMessage] = useState<string | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
+  const [focused, setFocused] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.valueAsNumber;
-    if (value >= 0 || event.target.value === "") {
-      setInputAmount(value || 0);
+  useEffect(() => {
+    if (toast) {
+      const t = setTimeout(() => setToast(null), 2200);
+      return () => clearTimeout(t);
+    }
+  }, [toast]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+
+    if (inputValue === "") {
+      setInputAmount(0);
+      return;
+    }
+
+    let processedValue = inputValue;
+    if (
+      inputValue.length > 1 &&
+      inputValue.startsWith("0") &&
+      !inputValue.startsWith("0.")
+    ) {
+      processedValue = inputValue.replace(/^0+/, "");
+    }
+
+    const numericValue = parseFloat(processedValue);
+
+    if (!isNaN(numericValue) && numericValue >= 0) {
+      setInputAmount(numericValue);
     }
   };
 
   const handleCalculate = () => {
-    const amountToCalculate = inputAmount === 0 ? 0 : inputAmount;
-    if (amountToCalculate >= 0) {
-      const calculation = calculateFeeAndRecipientAmount(amountToCalculate);
+    if (inputAmount > 0) {
+      const calculation = calculateFeeAndRecipientAmount(inputAmount);
       setResult(calculation);
       setIsInputDisabled(true);
       setIsFlipped(true);
@@ -34,153 +59,245 @@ export default function PayPalFee() {
   };
 
   const handleRestart = () => {
-    setInputAmount(100);
-    setResult(null);
-    setIsInputDisabled(false);
     setIsFlipped(false);
+    setTimeout(() => {
+      setInputAmount(100);
+      setResult(null);
+      setIsInputDisabled(false);
+      setTimeout(() => inputRef.current?.focus(), 50);
+    }, 400);
   };
 
-  const handleCopy = () => {
-    if (result) {
-      const textToCopy = `\`\`\`css
-Amount: USD$ ${inputAmount}
-Amount without Tax: USD$ ${result.recipientAmount}
-Amount with Tax included: USD$ ${result.paymentToReceive}
+  const handleCopy = async () => {
+    if (!result) return;
+    const text = `\`\`\`
+Amount:              USD$ ${inputAmount.toFixed(2)}
+Amount after fee:    USD$ ${result.recipientAmount.toFixed(2)}
+To receive $${inputAmount.toFixed(2)}: USD$ ${result.paymentToReceive.toFixed(
+      2
+    )}
 \`\`\`
--# Calculated Using: [PayPal | Sofi | Karuta | Mazoku Fee Calculator by ItsMe Prince]( https://paypal-and-sofi-wist-fee-calculator.vercel.app/)`;
-      const textarea = document.createElement("textarea");
-      textarea.value = textToCopy;
-      textarea.style.position = "absolute";
-      textarea.style.left = "-9999px";
-      document.body.appendChild(textarea);
-      textarea.select();
+-# Calculated Using: [PayPal | Sofi | Karuta | Mazoku Fee Calculator by ItsMe Prince](https://paypal-and-sofi-wist-fee-calculator.vercel.app/)`;
+    try {
+      await navigator.clipboard.writeText(text);
+      setToast("Copied to clipboard");
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.cssText = "position:absolute;left:-9999px";
+      document.body.appendChild(ta);
+      ta.select();
       try {
         document.execCommand("copy");
-        setPopupMessage("Calculations copied and ready to send!");
+        setToast("Copied to clipboard");
       } catch (err) {
-        console.error("Unable to copy", err);
+        console.error("Copy failed", err);
       }
-      document.body.removeChild(textarea);
-      setTimeout(() => setPopupMessage(null), 2000);
+      document.body.removeChild(ta);
     }
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !isInputDisabled && inputAmount > 0)
+      handleCalculate();
+  };
+
+  const breakdownRows = result
+    ? [
+        {
+          label: "Amount sent",
+          value: `$${inputAmount.toFixed(2)}`,
+          colorClass: "text-white",
+        },
+        {
+          label: "PayPal fee",
+          value: `−$${result.fee.toFixed(2)}`,
+          colorClass: "text-red-400",
+        },
+        {
+          label: "You receive",
+          value: `$${result.recipientAmount.toFixed(2)}`,
+          colorClass: "text-green-400",
+        },
+      ]
+    : [];
+
   return (
-    <div className="h-screen flex flex-col justify-center items-center text-white">
-      <HomeButton />
-      {popupMessage && (
-        <div className="absolute top-5 bg-blue-500 text-white px-4 py-2 rounded-md shadow-lg transition-all ease-in-out duration-1000">
-          {popupMessage}
-        </div>
-      )}
-      <div
-        className={`relative w-[350px] sm:w-[600px] h-80 transition-transform duration-500 ${
-          isFlipped ? "rotate-y-180" : ""
-        }`}
-        style={{ perspective: "1000px", transformStyle: "preserve-3d" }}
-      >
-        {/* Front Side */}
+    <PageWrapper>
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <HomeButton />
+
         <div
-          className={`absolute w-full h-full bg-gradient-to-r from-blue-900 to-blue-600 rounded-2xl shadow-blue-600/50 shadow-2xl p-5 ${
-            isFlipped ? "hidden" : ""
-          } backface-hidden flex flex-col justify-center items-center gap-5`}
+          className={`fixed top-5 left-1/2 -translate-x-1/2 bg-white text-[#0a0a0f] font-mono text-[12px] tracking-[0.06em] px-[22px] py-[10px] rounded-full z-50 pointer-events-none whitespace-nowrap ${
+            toast ? "translate-y-0" : "-translate-y-20"
+          }`}
           style={{
-            backfaceVisibility: "hidden",
+            transition: "transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
           }}
         >
-          <h1 className="text-xl font-semibold text-white z-10">
-            Enter the amount below ...
-          </h1>
-          <div className="relative flex justify-center items-center shadow-md shadow-blue-600/60 rounded-md">
-            <div className=" bg-white antialiased text-center text-4xl  p-2 rounded-l-md text-black shadow-blue-600/20 shadow-md z-10 px-4 select-none">
-              USD$
-            </div>
-            <input
-              id="amount"
-              type="number"
-              min="0"
-              step="0.01"
-              value={inputAmount}
-              onChange={handleInputChange}
-              placeholder="Enter amount"
-              className={`z-10 pr-5 antialiased text-center text-4xl  p-2 rounded-r-md text-black w-full focus:outline-none ${
-                isInputDisabled ? "bg-white cursor-not-allowed" : ""
-              }`}
-              disabled={isInputDisabled}
-            />
-          </div>
-          <div className=" flex flex-col gap-5 justify-center items-center">
-            <button
-              onClick={handleCalculate}
-              className="z-10 bg-white rounded-md px-5 h-[45px] text-blue-950 shadow-blue-600/60 hover:shadow-blue-600/90 shadow-md hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
+          {toast}
+        </div>
+        {/* 3D Card Scene */}
+        <div
+          className="w-full max-w-[580px] h-[400px] sm:h-[440px] md:h-[480px]"
+          style={{ perspective: "1200px" }}
+        >
+          <div
+            className="relative w-full h-full"
+            style={{
+              transformStyle: "preserve-3d",
+              transition: "transform 0.75s cubic-bezier(0.77, 0, 0.175, 1)",
+              transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+            }}
+          >
+            {/* ─── FRONT ─── */}
+            <div
+              className="absolute inset-0 rounded-3xl bg-[#0000003b] border border-white/[0.07] p-6 sm:p-8 md:p-10 flex flex-col items-center justify-center gap-4 sm:gap-5 md:gap-7"
+              style={{
+                backfaceVisibility: "hidden",
+                WebkitBackfaceVisibility: "hidden",
+              }}
             >
-              If sending this . . .
-            </button>
-
-            <div className="font-extralight text-xs">
-              4.99% + $.49 (Invoicing, PayPal Checkout, Venmo)
-            </div>
-          </div>
-        </div>
-
-        {/* Back Side */}
-        <div
-          className="absolute w-full h-full bg-gradient-to-r from-blue-600 to-blue-900 rounded-2xl shadow-blue-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-10"
-          style={{
-            backfaceVisibility: "hidden",
-            transform: "rotateY(180deg)",
-          }}
-        >
-          {result && (
-            <div className="flex flex-col gap-3 w-10/12 text-white">
-              <div className="text-center text-xl">
-                <p className="font-light">
-                  If you&apos;re sending{" "}
-                  <span className="font-bold text-lg scale-110">
-                    ${inputAmount}
-                  </span>
-                  , then you will be charged
-                  <span className="font-bold text-lg scale-110">
-                    {" "}
-                    ${result.fee}
-                  </span>{" "}
-                  as fee and you will receive approximately
-                  <span className="font-bold text-lg scale-110">
-                    {" "}
-                    ${result.recipientAmount}
-                  </span>
-                  . To receive
-                  <span className="font-bold text-lg scale-110">
-                    {" "}
-                    ${inputAmount}
-                  </span>
-                  , ask them to send
-                  <span className="font-bold text-lg scale-110">
-                    {" "}
-                    ${result.paymentToReceive}
-                  </span>{" "}
-                  to you.
-                </p>
+              {/* Label */}
+              <div className="flex items-center gap-2 font-mono text-[11px] tracking-[0.12em] uppercase text-white/30">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_#3b82f6] shrink-0" />
+                PayPal · Goods &amp; Services
               </div>
+
+              {/* Input */}
+              <div className="w-full">
+                <div
+                  className={`flex items-center rounded-[14px] bg-white/[0.04] border transition-colors duration-200 ${
+                    focused ? "border-blue-500/60" : "border-white/10"
+                  }`}
+                >
+                  <span className="px-5 h-16 flex items-center font-mono text-[13px] font-medium text-white/30 border-r border-white/[0.08] bg-black/20 select-none whitespace-nowrap shrink-0">
+                    USD $
+                  </span>
+                  <input
+                    ref={inputRef}
+                    id="amount"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={inputAmount}
+                    onChange={handleInputChange}
+                    onKeyPress={handleKeyPress}
+                    onFocus={() => setFocused(true)}
+                    onBlur={() => setFocused(false)}
+                    disabled={isInputDisabled}
+                    placeholder="0.00"
+                    className={`flex-1 min-w-0 h-16 bg-transparent border-none outline-none font-sans text-[32px] font-bold text-left px-4 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none transition-colors ${
+                      isInputDisabled
+                        ? "text-white/30 cursor-not-allowed"
+                        : "text-white cursor-text"
+                    }`}
+                  />
+                </div>
+              </div>
+
+              {/* CTA Button */}
+              <button
+                onClick={handleCalculate}
+                className="w-full h-[52px] bg-blue-500 rounded-xl font-sans text-[15px] font-bold tracking-[0.02em] text-white cursor-pointer flex items-center justify-center gap-2.5 transition-all duration-150 hover:opacity-85 active:scale-[0.98]"
+              >
+                If sending this
+                <ArrowRight size={16} />
+              </button>
+
+              <span className="font-mono text-[11px] text-white/20 tracking-[0.06em]">
+                4.49% + $0.49 · goods &amp; services
+              </span>
             </div>
-          )}
-          <div className="flex gap-5">
-            <button
-              onClick={handleRestart}
-              className="bg-white rounded-md px-5 h-[45px] text-blue-950 shadow-blue-600/90 hover:shadow-blue-600 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
+
+            {/* ─── BACK ─── */}
+            <div
+              className="absolute inset-0 rounded-3xl bg-[#0000005e] border border-white/[0.07] px-4 sm:px-6 md:px-10 py-4 sm:py-6 md:py-8 flex flex-col items-start justify-center gap-3 sm:gap-4 md:gap-5"
+              style={{
+                backfaceVisibility: "hidden",
+                WebkitBackfaceVisibility: "hidden",
+                transform: "rotateY(180deg)",
+              }}
             >
-              Restart
-            </button>
-            <button
-              onClick={handleCopy}
-              className="bg-white rounded-md px-5 h-[45px] text-blue-950 shadow-blue-600/90 hover:shadow-blue-600 shadow-xl hover:scale-105 transition-all ease-in-out  flex justify-center items-center gap-2 active:scale-125"
-            >
-              Copy
-              <Image src={"/copy.png"} height={20} width={20} alt="Copy" />
-            </button>
+              {result && (
+                <>
+                  {/* Summary */}
+                  <p className="font-mono text-center text-[13px] text-white/45 leading-[1.8] italic">
+                    If you&apos;re sending{" "}
+                    <strong className="text-white not-italic">
+                      ${inputAmount.toFixed(2)}
+                    </strong>
+                    , then you will be charged{" "}
+                    <strong className="text-red-400 not-italic">
+                      ${result.fee.toFixed(2)}
+                    </strong>{" "}
+                    as fee and you will receive approximately{" "}
+                    <strong className="text-green-400 not-italic">
+                      ${result.recipientAmount.toFixed(2)}
+                    </strong>
+                    . To receive{" "}
+                    <strong className="text-white not-italic">
+                      ${inputAmount.toFixed(2)}
+                    </strong>
+                    , ask them to send{" "}
+                    <strong className="text-white not-italic">
+                      ${result.paymentToReceive.toFixed(2)}
+                    </strong>{" "}
+                    to you.
+                  </p>
+
+                  {/* Breakdown */}
+                  <div className="w-full rounded-[14px] border border-white/[0.07] overflow-hidden">
+                    {breakdownRows.map((row, i) => (
+                      <div
+                        key={i}
+                        className="flex justify-between items-center px-[18px] py-3"
+                      >
+                        <span className="font-mono text-[12px] text-white/35 tracking-[0.04em]">
+                          {row.label}
+                        </span>
+                        <span
+                          className={`font-mono text-[14px] font-medium ${row.colorClass}`}
+                        >
+                          {row.value}
+                        </span>
+                      </div>
+                    ))}
+
+                    {/* Highlighted row */}
+                    <div className="flex justify-between items-center px-[18px] py-[14px] bg-white border-t border-blue-500/[0.15]">
+                      <span className="font-mono text-[12px] text-black tracking-[0.04em]">
+                        To receive ${inputAmount.toFixed(2)}, ask for
+                      </span>
+                      <span className="font-sans text-[18px] font-extrabold text-black tracking-[-0.01em]">
+                        ${result.paymentToReceive.toFixed(2)}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex gap-2.5 w-full">
+                    <button
+                      onClick={handleRestart}
+                      className="flex-1 h-11 bg-transparent border border-white/10 rounded-[10px] font-mono text-[13px] font-semibold text-white/50 cursor-pointer flex items-center justify-center gap-2 transition-all duration-150 hover:bg-white/[0.06] hover:text-white"
+                    >
+                      <RotateCcw size={13} />
+                      Reset
+                    </button>
+                    <button
+                      onClick={handleCopy}
+                      className="flex-[2] h-11 bg-white rounded-[10px] font-mono text-[13px] text-[#0a0a0f] cursor-pointer flex items-center justify-center gap-2 transition-all duration-150 hover:opacity-[0.88] active:scale-[0.97]"
+                    >
+                      <Copy size={13} />
+                      Copy for Discord
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </PageWrapper>
   );
 }
