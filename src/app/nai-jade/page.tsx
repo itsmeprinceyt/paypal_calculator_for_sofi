@@ -1,10 +1,10 @@
 "use client";
-import { useState } from "react";
-import Image from "next/image";
+import { useState, useEffect, useRef } from "react";
+import { Copy, RotateCcw, ArrowRight } from "lucide-react";
 import Link from "next/link";
-
 import { calculateFeeAndRecipientAmount } from "@/utils/calculateFee";
 import HomeButton from "../(components)/HomeButton";
+import PageWrapper from "../(components)/PageWrapper";
 
 export default function NaiUSD() {
   const [jadeAmount, setJadeAmount] = useState<number>(540);
@@ -17,229 +17,370 @@ export default function NaiUSD() {
   const [isInputDisabled, setIsInputDisabled] = useState<boolean>(false);
   const [dollarAmount, setDollarAmount] = useState<number>(0);
   const [isFlipped, setIsFlipped] = useState(false);
-  const [popupMessage, setPopupMessage] = useState<string | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
+  const [focusedJade, setFocusedJade] = useState(false);
+  const [focusedRatio, setFocusedRatio] = useState(false);
+  const jadeInputRef = useRef<HTMLInputElement>(null);
+  const ratioInputRef = useRef<HTMLInputElement>(null);
 
-  const handlejadeAmountChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const value = event.target.valueAsNumber;
-    if (value >= 0 || event.target.value === "") {
-      setJadeAmount(Math.floor(value) || 0);
+  useEffect(() => {
+    if (toast) {
+      const t = setTimeout(() => setToast(null), 2200);
+      return () => clearTimeout(t);
+    }
+  }, [toast]);
+
+  const handleJadeAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+
+    if (inputValue === "") {
+      setJadeAmount(0);
+      return;
+    }
+
+    let processedValue = inputValue;
+    if (
+      inputValue.length > 1 &&
+      inputValue.startsWith("0") &&
+      !inputValue.startsWith("0.")
+    ) {
+      processedValue = inputValue.replace(/^0+/, "");
+    }
+
+    const numericValue = parseInt(processedValue);
+
+    if (!isNaN(numericValue) && numericValue >= 0) {
+      setJadeAmount(numericValue);
     }
   };
 
-  const handleRatioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.valueAsNumber;
-    if (value >= 0 || event.target.value === "") {
-      setRatio(value || 0);
+  const handleRatioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+
+    if (inputValue === "") {
+      setRatio(0);
+      return;
+    }
+
+    let processedValue = inputValue;
+    if (
+      inputValue.length > 1 &&
+      inputValue.startsWith("0") &&
+      !inputValue.startsWith("0.")
+    ) {
+      processedValue = inputValue.replace(/^0+/, "");
+    }
+
+    const numericValue = parseFloat(processedValue);
+
+    if (!isNaN(numericValue) && numericValue >= 0) {
+      setRatio(numericValue);
     }
   };
 
   const handleCalculate = () => {
-    const calculatedAmount = parseFloat((jadeAmount / ratio).toFixed(2));
-    setDollarAmount(calculatedAmount);
-    const calculation = calculateFeeAndRecipientAmount(calculatedAmount);
-    setResult(calculation);
-    setIsInputDisabled(true);
-    setIsFlipped(true);
-  };
-
-  const handleRestart = () => {
-    setJadeAmount(540);
-    setRatio(18);
-    setResult(null);
-    setIsInputDisabled(false);
-    setDollarAmount(0);
-    setIsFlipped(false);
-  };
-
-  const handleCopy = () => {
-    if (result) {
-      const textToCopy = `\`\`\`css
-Jade Amount: ${jadeAmount} Jades
-Ratio: ${ratio} : $1
-Calculated $ Amount: USD$ ${dollarAmount}
-Amount without Tax: USD$ ${result.recipientAmount}
-Amount with Tax included: USD$ ${result.paymentToReceive}
-\`\`\`
--# Calculated Using: [PayPal | Sofi | Karuta | Mazoku Fee Calculator by ItsMe Prince]( https://paypal-and-sofi-wist-fee-calculator.vercel.app/)`;
-      const textarea = document.createElement("textarea");
-      textarea.value = textToCopy;
-      textarea.style.position = "absolute";
-      textarea.style.left = "-9999px";
-      document.body.appendChild(textarea);
-      textarea.select();
-      try {
-        document.execCommand("copy");
-        setPopupMessage("Calculations copied and ready to send!");
-      } catch (err) {
-        console.error("Unable to copy", err);
-      }
-      document.body.removeChild(textarea);
-      setTimeout(() => setPopupMessage(null), 2000);
+    if (jadeAmount > 0 && ratio > 0) {
+      const calculatedAmount = parseFloat((jadeAmount / ratio).toFixed(2));
+      setDollarAmount(calculatedAmount);
+      const calculation = calculateFeeAndRecipientAmount(calculatedAmount);
+      setResult(calculation);
+      setIsInputDisabled(true);
+      setIsFlipped(true);
     }
   };
 
+  const handleRestart = () => {
+    setIsFlipped(false);
+    setTimeout(() => {
+      setJadeAmount(540);
+      setRatio(18);
+      setResult(null);
+      setDollarAmount(0);
+      setIsInputDisabled(false);
+      setTimeout(() => jadeInputRef.current?.focus(), 50);
+    }, 400);
+  };
+
+  const handleCopy = async () => {
+    if (!result) return;
+    const text = `\`\`\`css
+Jade Amount:           ${jadeAmount} ${jadeAmount === 1 ? "Jade" : "Jades"}
+Ratio:                 ${ratio} : $1
+Calculated $ Amount:   USD$ ${dollarAmount.toFixed(2)}
+Amount without Tax:    USD$ ${result.recipientAmount.toFixed(2)}
+Amount with Tax:       USD$ ${result.paymentToReceive.toFixed(2)}
+\`\`\`
+-# Calculated Using: [PayPal | Sofi | Karuta | Mazoku Fee Calculator by ItsMe Prince](https://paypal-and-sofi-wist-fee-calculator.vercel.app/)`;
+
+    try {
+      await navigator.clipboard.writeText(text);
+      setToast("Copied to clipboard");
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.cssText = "position:absolute;left:-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand("copy");
+        setToast("Copied to clipboard");
+      } catch (err) {
+        console.error("Copy failed", err);
+      }
+      document.body.removeChild(ta);
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !isInputDisabled && jadeAmount > 0 && ratio > 0) {
+      handleCalculate();
+    }
+  };
+
+  const breakdownRows = result
+    ? [
+        {
+          label: "Amount sent",
+          value: `$${dollarAmount.toFixed(2)}`,
+          colorClass: "text-white",
+        },
+        {
+          label: "PayPal fee",
+          value: `−$${result.fee.toFixed(2)}`,
+          colorClass: "text-red-400",
+        },
+        {
+          label: "You receive",
+          value: `$${result.recipientAmount.toFixed(2)}`,
+          colorClass: "text-green-400",
+        },
+      ]
+    : [];
+
   return (
-    <div className="h-screen flex flex-col justify-center items-center text-green-950">
-      <HomeButton />
-      {popupMessage && (
-        <div className="absolute top-5 bg-green-500 text-green-950 px-4 py-2 rounded-md shadow-lg transition-all ease-in-out duration-1000">
-          {popupMessage}
-        </div>
-      )}
-      <div
-        className={`relative w-[350px] sm:w-[600px] h-96 transition-transform duration-500 ${
-          isFlipped ? "rotate-y-180" : ""
-        }`}
-        style={{ perspective: "1000px", transformStyle: "preserve-3d" }}
-      >
-        {/* Front Side */}
+    <PageWrapper>
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <HomeButton />
+
+        {/* INR Route Button */}
+        <Link
+          href="/nai-jade-inr"
+          className="fixed top-5 right-5 z-50 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full px-4 py-2 font-mono text-sm text-white/80 hover:text-white transition-all duration-200 flex items-center gap-2 backdrop-blur-sm"
+        >
+          <span className="text-green-400">₹</span>
+          INR Calculator
+        </Link>
+
         <div
-          className={`absolute w-full h-full bg-gradient-to-r from-green-600 to-green-400 rounded-2xl shadow-green-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-5 ${
-            isFlipped ? "hidden" : ""
+          className={`fixed top-5 left-1/2 -translate-x-1/2 bg-white text-[#0a0a0f] font-mono text-[12px] tracking-[0.06em] px-[22px] py-[10px] rounded-full z-50 pointer-events-none whitespace-nowrap ${
+            toast ? "translate-y-0" : "-translate-y-20"
           }`}
           style={{
-            backfaceVisibility: "hidden",
+            transition: "transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
           }}
         >
-          <h1 className="text-xl font-semibold text-green-950 z-10">
-            Enter Jades Amount ...
-          </h1>
-          <div className="relative flex justify-center items-center shadow-md shadow-green-600/60 rounded-md">
-            <div className="bg-white h-full flex items-center p-2 rounded-l-md">
-              <Image
-                src={"/jade-icon.png"}
-                height={40}
-                width={40}
-                alt="Jade Icon"
-              />
-            </div>
-            <input
-              id="jadeAmount"
-              type="number"
-              min="1"
-              step="1"
-              pattern="\d*"
-              inputMode="numeric"
-              value={jadeAmount}
-              onChange={handlejadeAmountChange}
-              placeholder="Enter Bloodstone Amount"
-              className={`z-10 antialiased text-center text-4xl p-2 rounded-r-md text-black w-[250px] focus:outline-none placeholder:text-2xl ${
-                isInputDisabled ? "bg-green-950 cursor-not-allowed" : ""
-              }`}
-              disabled={isInputDisabled}
-            />
-          </div>
-          <h1 className="text-xl font-semibold text-green-950 z-10">
-            Enter Ratio ...
-          </h1>
-          <div className="relative flex justify-center items-center shadow-md shadow-green-600/60 rounded-md">
-            <input
-              id="ratio"
-              type="number"
-              min="0"
-              step="0.1"
-              value={ratio}
-              onChange={handleRatioChange}
-              placeholder="Enter Ratio"
-              className={`z-10 antialiased text-center text-4xl p-2 rounded-l-md text-green-950 w-[150px] focus:outline-none ${
-                isInputDisabled ? "bg-green-950 cursor-not-allowed" : ""
-              }`}
-              disabled={isInputDisabled}
-            />
-            <div className="absolute z-10 top-1 white text-black text-4xl">
-              :
-            </div>
-            <div className="bg-white h-full w-[150px] flex items-center justify-center p-2 rounded-r-md text-black text-4xl select-none">
-              USD$1
-            </div>
-          </div>
-          <div className="flex gap-5 mt-5">
-            <button
-              onClick={handleCalculate}
-              className="z-10 bg-white rounded-md px-5 h-[45px] text-green-950 shadow-green-700/80 hover:shadow-green-800 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
-            >
-              Calculate
-            </button>
-            <Link href={"/nai-jade-inr"}>
-              <button className="z-10 bg-white rounded-md px-5 h-[45px] text-green-950 shadow-green-700/80 hover:shadow-green-800 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center">
-                Switch to INR
-              </button>
-            </Link>
-          </div>
+          {toast}
         </div>
 
-        {/* Back Side */}
+        {/* 3D Card Scene */}
         <div
-          className="absolute w-full h-full bg-gradient-to-r from-green-400 to-green-600 rounded-2xl shadow-green-600/50 shadow-2xl p-5 backface-hidden flex flex-col justify-center items-center gap-10"
-          style={{
-            backfaceVisibility: "hidden",
-            transform: "rotateY(180deg)",
-            zIndex: 20,
-          }}
+          className="w-full max-w-[580px] h-[400px] sm:h-[440px] md:h-[480px]"
+          style={{ perspective: "1200px" }}
         >
-          {result && (
-            <div className="flex flex-col gap-3 w-10/12 text-green-950">
-              <div className="text-center text-xl">
-                <p className="font-light">
-                  You are selling
-                  <span className="font-bold text-lg scale-110">
-                    &nbsp;
-                    {jadeAmount} {jadeAmount === 1 ? "Jade" : "Jades"}
-                  </span>
-                  &nbsp; at the ratio of
-                  <span className="font-bold text-lg scale-110">
-                    {" "}
-                    {ratio} : $1{" "}
-                  </span>{" "}
-                  for
-                  <span className="font-bold text-lg scale-110">
-                    {" "}
-                    ${dollarAmount}
-                  </span>
-                  , where
-                  <span className="font-bold text-lg scale-110">
-                    {" "}
-                    ${result.fee}
-                  </span>{" "}
-                  will be charged as fee and you will receive approximately{" "}
-                  <span className="font-bold text-lg scale-110">
-                    {" "}
-                    ${result.recipientAmount}
-                  </span>
-                  . To receive{" "}
-                  <span className="font-bold text-lg scale-110">
-                    {" "}
-                    ${dollarAmount}
-                  </span>
-                  , ask them to send
-                  <span className="font-bold text-lg scale-110">
-                    {" "}
-                    ${result.paymentToReceive}
-                  </span>{" "}
-                  to you.
-                </p>
+          <div
+            className="relative w-full h-full"
+            style={{
+              transformStyle: "preserve-3d",
+              transition: "transform 0.75s cubic-bezier(0.77, 0, 0.175, 1)",
+              transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+            }}
+          >
+            {/* ─── FRONT ─── */}
+            <div
+              className="absolute inset-0 rounded-3xl bg-[#0000003b] border border-white/[0.07] p-6 sm:p-8 md:p-10 flex flex-col items-center justify-center gap-4 sm:gap-5 md:gap-7"
+              style={{
+                backfaceVisibility: "hidden",
+                WebkitBackfaceVisibility: "hidden",
+              }}
+            >
+              {/* Label */}
+              <div className="flex items-center gap-2 font-mono text-[11px] tracking-[0.12em] uppercase text-white/30">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e] shrink-0" />
+                Nai · Jade Calculator
               </div>
+
+              {/* Jade Amount Input */}
+              <div className="w-full">
+                <div
+                  className={`flex items-center rounded-[14px] bg-white/[0.04] border transition-colors duration-200 ${
+                    focusedJade ? "border-green-500/60" : "border-white/10"
+                  }`}
+                >
+                  <span className="px-5 h-16 flex items-center font-mono text-[13px] font-medium text-white/30 border-r border-white/[0.08] bg-black/20 select-none whitespace-nowrap shrink-0">
+                    Jades
+                  </span>
+                  <input
+                    ref={jadeInputRef}
+                    type="number"
+                    min="0"
+                    step="1"
+                    value={jadeAmount}
+                    onChange={handleJadeAmountChange}
+                    onKeyPress={handleKeyPress}
+                    onFocus={() => setFocusedJade(true)}
+                    onBlur={() => setFocusedJade(false)}
+                    disabled={isInputDisabled}
+                    placeholder="0"
+                    className={`flex-1 min-w-0 h-16 bg-transparent border-none outline-none font-sans text-[32px] font-bold text-left px-4 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none transition-colors ${
+                      isInputDisabled
+                        ? "text-white/30 cursor-not-allowed"
+                        : "text-white cursor-text"
+                    }`}
+                  />
+                </div>
+              </div>
+
+              {/* Ratio Input */}
+              <div className="w-full">
+                <div
+                  className={`flex items-center rounded-[14px] bg-white/[0.04] border transition-colors duration-200 ${
+                    focusedRatio ? "border-green-500/60" : "border-white/10"
+                  }`}
+                >
+                  <span className="px-5 h-16 flex items-center font-mono text-[13px] font-medium text-white/30 border-r border-white/[0.08] bg-black/20 select-none whitespace-nowrap shrink-0">
+                    Ratio
+                  </span>
+                  <input
+                    ref={ratioInputRef}
+                    type="number"
+                    min="0"
+                    step="0.1"
+                    value={ratio}
+                    onChange={handleRatioChange}
+                    onKeyPress={handleKeyPress}
+                    onFocus={() => setFocusedRatio(true)}
+                    onBlur={() => setFocusedRatio(false)}
+                    disabled={isInputDisabled}
+                    placeholder="0"
+                    className={`flex-1 min-w-0 h-16 bg-transparent border-none outline-none font-sans text-[32px] font-bold text-left px-4 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none transition-colors ${
+                      isInputDisabled
+                        ? "text-white/30 cursor-not-allowed"
+                        : "text-white cursor-text"
+                    }`}
+                  />
+                  <span className="px-5 h-16 flex items-center font-mono text-[13px] font-medium text-white/30 border-l border-white/[0.08] bg-black/20 select-none whitespace-nowrap shrink-0">
+                    : $1
+                  </span>
+                </div>
+              </div>
+
+              {/* CTA Button */}
+              <button
+                onClick={handleCalculate}
+                disabled={jadeAmount === 0 || ratio === 0}
+                className="w-full h-[52px] bg-green-500 rounded-xl font-sans text-[15px] font-bold tracking-[0.02em] text-white cursor-pointer flex items-center justify-center gap-2.5 transition-all duration-150 hover:opacity-85 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:opacity-50 disabled:active:scale-100"
+              >
+                Calculate
+                <ArrowRight size={16} />
+              </button>
+
+              <span className="font-mono text-[11px] text-white/20 tracking-[0.06em]">
+                {ratio} jades = $1 · Including PayPal fee
+              </span>
             </div>
-          )}
-          <div className="flex gap-4">
-            <button
-              onClick={handleRestart}
-              className="z-10 bg-white rounded-md px-5 h-[45px] text-green-950 shadow-green-700/80 hover:shadow-green-800 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center"
+
+            {/* ─── BACK ─── */}
+            <div
+              className="absolute inset-0 rounded-3xl bg-[#0000005e] border border-white/[0.07] px-4 sm:px-6 md:px-10 py-4 sm:py-6 md:py-8 flex flex-col items-center justify-center gap-3 sm:gap-4 md:gap-5"
+              style={{
+                backfaceVisibility: "hidden",
+                WebkitBackfaceVisibility: "hidden",
+                transform: "rotateY(180deg)",
+              }}
             >
-              Restart
-            </button>
-            <button
-              onClick={handleCopy}
-              className="z-10 bg-white rounded-md px-5 h-[45px] text-green-950 shadow-green-700/80 hover:shadow-green-800 shadow-xl hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center gap-2 active:scale-125"
-            >
-              Copy
-              <Image src={"/copy.png"} height={25} width={25} alt="Copy" />
-            </button>
+              {result && (
+                <>
+                  {/* Summary */}
+                  <p className="font-mono text-center w-full text-[13px] text-white/45 leading-[1.8] italic">
+                    You are selling{" "}
+                    <strong className="text-green-400 not-italic">
+                      {jadeAmount} {jadeAmount === 1 ? "Jade" : "Jades"}
+                    </strong>{" "}
+                    at{" "}
+                    <strong className="text-white not-italic">
+                      {ratio} : $1
+                    </strong>{" "}
+                    for{" "}
+                    <strong className="text-white not-italic">
+                      ${dollarAmount.toFixed(2)}
+                    </strong>
+                    , where{" "}
+                    <strong className="text-red-400 not-italic">
+                      ${result.fee.toFixed(2)}
+                    </strong>{" "}
+                    will be charged as fee. To receive{" "}
+                    <strong className="text-white not-italic">
+                      ${dollarAmount.toFixed(2)}
+                    </strong>
+                    , ask them to send{" "}
+                    <strong className="text-white not-italic">
+                      ${result.paymentToReceive.toFixed(2)}
+                    </strong>{" "}
+                    to you.
+                  </p>
+
+                  {/* Breakdown */}
+                  <div className="w-full rounded-[14px] border border-white/[0.07] overflow-hidden">
+                    {breakdownRows.map((row, i) => (
+                      <div
+                        key={i}
+                        className="flex justify-between items-center px-[18px] py-3"
+                      >
+                        <span className="font-mono text-[12px] text-white/35 tracking-[0.04em]">
+                          {row.label}
+                        </span>
+                        <span
+                          className={`font-mono text-[14px] font-medium ${row.colorClass}`}
+                        >
+                          {row.value}
+                        </span>
+                      </div>
+                    ))}
+
+                    {/* Highlighted row */}
+                    <div className="flex justify-between items-center px-[18px] py-[14px] bg-white border-t border-green-500/[0.15]">
+                      <span className="font-mono text-[12px] text-black tracking-[0.04em]">
+                        To receive ${dollarAmount.toFixed(2)}, ask for
+                      </span>
+                      <span className="font-sans text-[18px] font-extrabold text-black tracking-[-0.01em]">
+                        ${result.paymentToReceive.toFixed(2)}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex gap-2.5 w-full">
+                    <button
+                      onClick={handleRestart}
+                      className="flex-1 h-11 bg-transparent border border-white/10 rounded-[10px] font-mono text-[13px] font-semibold text-white/50 cursor-pointer flex items-center justify-center gap-2 transition-all duration-150 hover:bg-white/[0.06] hover:text-white"
+                    >
+                      <RotateCcw size={13} />
+                      Reset
+                    </button>
+                    <button
+                      onClick={handleCopy}
+                      className="flex-[2] h-11 bg-white rounded-[10px] font-mono text-[13px] text-[#0a0a0f] cursor-pointer flex items-center justify-center gap-2 transition-all duration-150 hover:opacity-[0.88] active:scale-[0.97]"
+                    >
+                      <Copy size={13} />
+                      Copy for Discord
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </PageWrapper>
   );
 }
