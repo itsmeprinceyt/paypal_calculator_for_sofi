@@ -6,6 +6,7 @@ import MadeBy from "./(components)/AboutMe";
 import CustomLoader from "./(components)/CustomLoader";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import DisclaimerModal from "./(components)/Disclaimer";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -58,6 +59,7 @@ export default function RootLayout({
       <body className="relative">
         <Suspense fallback={<CustomLoader />}>
           {children}
+          <DisclaimerModal />
           <MadeBy />
           <Analytics />
           <SpeedInsights />
