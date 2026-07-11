@@ -2,25 +2,22 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useRef, useCallback } from "react";
-import { ChevronDown, ArrowUp, ExternalLink, AlertCircle } from "lucide-react";
+import { ChevronDown, ArrowUp, AlertCircle } from "lucide-react";
 import PageWrapper from "./(components)/PageWrapper";
-import {
-  CalculatorCardProps,
-  DiscordLinkProps,
-  NavButtonProps,
-} from "../types/HomePage.type";
+import { CalculatorCardProps, NavButtonProps } from "../types/HomePage.type";
+import PromotedServers from "./(components)/PromotedServer";
 
 const NavButton = ({ onClick, direction }: NavButtonProps) => (
   <button
     onClick={onClick}
-    className="absolute left-1/2 bottom-8 transform -translate-x-1/2 group"
+    className="absolute left-1/2 bottom-4 sm:bottom-8 transform -translate-x-1/2 group z-10"
     aria-label={`Scroll ${direction}`}
   >
-    <div className="p-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300 group-hover:scale-110">
+    <div className="p-1.5 sm:p-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300 group-hover:scale-110">
       {direction === "down" ? (
-        <ChevronDown className="w-6 h-6 text-white animate-pulse hover:animate-none" />
+        <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-white animate-pulse hover:animate-none" />
       ) : (
-        <ArrowUp className="w-6 h-6 text-white" />
+        <ArrowUp className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
       )}
     </div>
   </button>
@@ -35,49 +32,30 @@ const CalculatorCard = ({
   title,
   isGif = false,
 }: CalculatorCardProps) => (
-  <Link href={href} className="block group">
+  <Link
+    href={href}
+    className="block group w-full xs:w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.5rem)]"
+  >
     <div
-      className={`relative overflow-hidden ${gradient} rounded-xl px-2 py-2 ${textColor} shadow-xl hover:shadow-2xl transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-1`}
+      className={`relative overflow-hidden ${gradient} rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 ${textColor} shadow-xl hover:shadow-2xl transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-1`}
       style={{ boxShadow: `0 20px 30px -10px ${shadowColor}` }}
     >
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700" />
-      <div className="flex items-center gap-3">
-        <div className="relative w-10 h-10 flex-shrink-0 rounded-lg">
+      <div className="flex items-center gap-2.5 sm:gap-3">
+        <div className="relative w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0 rounded-lg">
           <Image
             src={icon}
             fill
-            sizes="40px"
-            className={`object-contain rounded-lg`}
+            sizes="(max-width: 640px) 32px, 40px"
+            className="object-contain rounded-lg"
             alt={title}
             unoptimized={isGif}
           />
         </div>
-        <p className="font-medium text-sm sm:text-base">{title}</p>
+        <p className="font-medium text-xs sm:text-sm md:text-base truncate">
+          {title}
+        </p>
       </div>
-    </div>
-  </Link>
-);
-
-const DiscordLink = ({ href, name }: DiscordLinkProps) => (
-  <Link
-    href={href}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="block group"
-  >
-    <div className="bg-purple-200/90 hover:bg-purple-200 rounded-xl px-2 py-1 text-purple-950 shadow-lg hover:shadow-purple-600/30 transition-all duration-300 group-hover:scale-105 flex items-center gap-3">
-      <div className="relative w-10 h-10 flex-shrink-0">
-        <Image
-          src="/Discord.gif"
-          fill
-          sizes="32px"
-          className="object-contain"
-          alt="Discord"
-          unoptimized
-        />
-      </div>
-      <span className="flex-1 text-sm font-medium">{name}</span>
-      <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
     </div>
   </Link>
 );
@@ -144,85 +122,37 @@ export default function Home() {
     },
   ];
 
-  const discordLinks: DiscordLinkProps[] = [
-    { href: "https://discord.gg/HgXNs4p5cx", name: "ItsMe Prince" },
-    { href: "https://discord.gg/sofi", name: "Sofi Cafe" },
-    { href: "https://discord.gg/soficorner", name: "The Corner" },
-    { href: "https://discord.gg/karuta", name: "Karuta Hub" },
-    { href: "https://discord.gg/cove", name: "Egg Cove" },
-    { href: "https://discord.gg/mazoku", name: "Mazoku Legacy" },
-    { href: "https://discord.gg/nai", name: "Nairi's Basement" },
-    { href: "https://discord.gg/jsWxmgBFDB", name: "Juice Box" },
-    { href: "https://discord.gg/RrewX8Sw5P", name: "The Hangout" },
-  ];
-
   return (
     <PageWrapper>
       <main className="select-none">
         {/* Hero Section */}
         <section
           ref={sections.home}
-          className="relative min-h-screen flex flex-col justify-center items-center px-4 py-12"
+          className="relative min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 py-16 sm:py-12"
         >
-          <div className="max-w-4xl mx-auto text-center space-y-8">
-            <div className="space-y-4">
-              <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold text-white tracking-tight">
+          <div className="w-full max-w-4xl mx-auto text-center space-y-6 sm:space-y-8">
+            <div className="space-y-3 sm:space-y-4">
+              <h1 className="text-4xl xs:text-5xl sm:text-7xl lg:text-8xl font-bold text-white tracking-tight">
                 Welcome!
               </h1>
-              <p className="text-white/80 text-sm sm:text-base max-w-2xl mx-auto font-light leading-relaxed">
+              <p className="text-white/80 text-xs sm:text-sm md:text-base max-w-2xl mx-auto font-light leading-relaxed px-2">
                 Effortless Fee Calculations for PayPal, Sofi Wists, Karuta
                 Tickets, Mazoku Bloodstones and Nai Jades!!
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto">
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 max-w-md sm:max-w-xl mx-auto">
               {calculatorCards.map((card) => (
                 <CalculatorCard key={card.href} {...card} />
               ))}
             </div>
 
-            <div className="flex items-center justify-center gap-2 text-white/60 text-xs sm:text-sm font-light">
-              <AlertCircle className="w-4 h-4" />
+            <div className="flex items-center justify-center gap-2 text-white/60 text-[11px] sm:text-xs md:text-sm font-light px-4 text-center">
+              <AlertCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
               <span>
                 Default values do not determine the market rates! Please do your
                 own study!
               </span>
-            </div>
-          </div>
-
-          <NavButton
-            onClick={() => scrollToSection(sections.video)}
-            direction="down"
-          />
-        </section>
-
-        {/* Video Section */}
-        <section
-          ref={sections.video}
-          className="relative min-h-screen flex flex-col justify-center items-center px-4 py-12"
-        >
-          <div className="w-full max-w-7xl mx-auto text-center space-y-8">
-            <div className="space-y-6">
-              <h2 className="text-white/80 text-xl sm:text-2xl font-light border-b border-white/30 pb-4 inline-block">
-                Watch the project explanation
-              </h2>
-
-              {/* Bigger video container - using full width with max-w-6xl */}
-              <div className="relative aspect-video w-full max-w-6xl mx-auto rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10">
-                <iframe
-                  src="https://www.youtube.com/embed/TmGlgE4iUN4?si=0uv-ugOXFzfnhE7_"
-                  title="Project Explanation Video"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen
-                  className="absolute inset-0 w-full h-full"
-                />
-              </div>
-
-              {/* Optional: Add a subtle caption */}
-              <p className="text-white/50 text-sm mt-2">
-                Full explanation of all calculators and how to use them
-              </p>
             </div>
           </div>
 
@@ -235,37 +165,66 @@ export default function Home() {
         {/* Disclaimer Section */}
         <section
           ref={sections.disclaimer}
-          className="relative min-h-screen flex flex-col justify-center items-center px-4 py-12"
+          className="relative min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 py-16 sm:py-12"
         >
-          <div className="max-w-4xl mx-auto text-center space-y-8">
-            <div className="space-y-6">
-              <h2 className="text-4xl sm:text-5xl font-bold text-white border-b border-white/30 pb-4 inline-block">
+          <div className="w-full max-w-xl mx-auto text-center space-y-6 sm:space-y-8">
+            <div className="space-y-4 sm:space-y-6">
+              <h2 className="text-3xl xs:text-4xl sm:text-5xl font-bold text-white border-b border-white/30 pb-3 sm:pb-4 inline-block">
                 Disclaimer
               </h2>
 
-              <div className="bg-purple-500/10 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-purple-500/20">
-                <p className="text-purple-300 text-sm sm:text-base leading-relaxed font-light">
-                  This website is intended solely for educational purposes. I do
-                  not support or encourage cross-trading in Sofi, Karuta, or
-                  Mazoku, as it is against the rules. Any actions you take
-                  within these games, including cross-trading or related
-                  activities, are your responsibility. I am not accountable for
-                  any outcomes or issues that may arise from engaging in this
-                  playstyle.
+              <div className="bg-purple-500/10 backdrop-blur-sm rounded-2xl p-4 sm:p-6 md:p-8 border border-purple-500/20">
+                <p className="text-purple-300 text-xs sm:text-sm md:text-base leading-relaxed font-light text-left sm:text-center">
+                  This website is provided solely for educational and
+                  informational purposes. I do not support, promote, or
+                  encourage cross-trading in Sofi, Karuta, Mazoku, or any other
+                  Discord bot, game, or platform where such activities are
+                  prohibited by its official or unofficial rules, guidelines, or
+                  community standards. Any actions you choose to take, including
+                  cross-trading or related activities, are entirely your own
+                  responsibility. I am not affiliated with these bots or their
+                  developers and accept no responsibility or liability for any
+                  consequences, including warnings, restrictions, suspensions,
+                  or bans, resulting from the use of this website or your
+                  actions.
                 </p>
               </div>
 
-              <div className="space-y-4">
-                <h3 className="text-white/80 text-lg sm:text-xl font-light flex items-center justify-center gap-2">
-                  Discord Servers you can join!
-                </h3>
+              <PromotedServers />
+            </div>
+          </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-w-2xl mx-auto pb-14">
-                  {discordLinks.map((link) => (
-                    <DiscordLink key={link.href} {...link} />
-                  ))}
-                </div>
+          <NavButton
+            onClick={() => scrollToSection(sections.video)}
+            direction="down"
+          />
+        </section>
+
+        {/* Video Section */}
+        <section
+          ref={sections.video}
+          className="relative min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 py-16 sm:py-12"
+        >
+          <div className="w-full max-w-7xl mx-auto text-center space-y-6 sm:space-y-8">
+            <div className="space-y-4 sm:space-y-6">
+              <h2 className="text-white/80 text-lg xs:text-xl sm:text-2xl font-light border-b border-white/30 pb-3 sm:pb-4 inline-block px-2">
+                Watch the project explanation
+              </h2>
+
+              <div className="relative aspect-video w-full max-w-6xl mx-auto rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10">
+                <iframe
+                  src="https://www.youtube.com/embed/TmGlgE4iUN4?si=0uv-ugOXFzfnhE7_"
+                  title="Project Explanation Video"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full"
+                />
               </div>
+
+              <p className="text-white/50 text-xs sm:text-sm mt-2 px-4">
+                Full explanation of all calculators and how to use them
+              </p>
             </div>
           </div>
 
@@ -278,18 +237,18 @@ export default function Home() {
         {/* Thank You Section */}
         <section
           ref={sections.thankYou}
-          className="relative min-h-screen flex flex-col justify-center items-center px-4 py-12"
+          className="relative min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 py-16 sm:py-12"
         >
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-8">
+          <div className="w-full max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 sm:mb-8 px-2">
               Thank You For Visiting!
             </h2>
 
             <button
               onClick={() => scrollToSection(sections.home)}
-              className="group relative inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full text-white border border-white/20 transition-all duration-300 hover:scale-105"
+              className="group relative inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full text-white border border-white/20 transition-all duration-300 hover:scale-105 text-sm sm:text-base"
             >
-              <ArrowUp className="w-5 h-5 group-hover:-translate-y-1 transition-transform" />
+              <ArrowUp className="w-4 h-4 sm:w-5 sm:h-5 group-hover:-translate-y-1 transition-transform" />
               <span>Back to Top</span>
             </button>
           </div>
