@@ -2,13 +2,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useRef, useCallback } from "react";
-import { ChevronDown, ArrowUp, ExternalLink, AlertCircle } from "lucide-react";
+import { ChevronDown, ArrowUp, AlertCircle } from "lucide-react";
 import PageWrapper from "./(components)/PageWrapper";
-import {
-  CalculatorCardProps,
-  DiscordLinkProps,
-  NavButtonProps,
-} from "../types/HomePage.type";
+import { CalculatorCardProps, NavButtonProps } from "../types/HomePage.type";
+import PromotedServers from "./(components)/PromotedServer";
 
 const NavButton = ({ onClick, direction }: NavButtonProps) => (
   <button
@@ -54,30 +51,6 @@ const CalculatorCard = ({
         </div>
         <p className="font-medium text-sm sm:text-base">{title}</p>
       </div>
-    </div>
-  </Link>
-);
-
-const DiscordLink = ({ href, name }: DiscordLinkProps) => (
-  <Link
-    href={href}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="block group"
-  >
-    <div className="bg-purple-200/90 hover:bg-purple-200 rounded-xl px-2 py-1 text-purple-950 shadow-lg hover:shadow-purple-600/30 transition-all duration-300 group-hover:scale-105 flex items-center gap-3">
-      <div className="relative w-10 h-10 flex-shrink-0">
-        <Image
-          src="/Discord.gif"
-          fill
-          sizes="32px"
-          className="object-contain"
-          alt="Discord"
-          unoptimized
-        />
-      </div>
-      <span className="flex-1 text-sm font-medium">{name}</span>
-      <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
     </div>
   </Link>
 );
@@ -144,18 +117,6 @@ export default function Home() {
     },
   ];
 
-  const discordLinks: DiscordLinkProps[] = [
-    { href: "https://discord.gg/HgXNs4p5cx", name: "ItsMe Prince" },
-    { href: "https://discord.gg/sofi", name: "Sofi Cafe" },
-    { href: "https://discord.gg/soficorner", name: "The Corner" },
-    { href: "https://discord.gg/karuta", name: "Karuta Hub" },
-    { href: "https://discord.gg/cove", name: "Egg Cove" },
-    { href: "https://discord.gg/mazoku", name: "Mazoku Legacy" },
-    { href: "https://discord.gg/nai", name: "Nairi's Basement" },
-    { href: "https://discord.gg/jsWxmgBFDB", name: "Juice Box" },
-    { href: "https://discord.gg/RrewX8Sw5P", name: "The Hangout" },
-  ];
-
   return (
     <PageWrapper>
       <main className="select-none">
@@ -175,7 +136,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto">
+            <div className="flex flex-wrap items-center justify-center gap-4 max-w-xl mx-auto">
               {calculatorCards.map((card) => (
                 <CalculatorCard key={card.href} {...card} />
               ))}
@@ -187,6 +148,44 @@ export default function Home() {
                 Default values do not determine the market rates! Please do your
                 own study!
               </span>
+            </div>
+          </div>
+
+          <NavButton
+            onClick={() => scrollToSection(sections.disclaimer)}
+            direction="down"
+          />
+        </section>
+
+        {/* Disclaimer Section */}
+        <section
+          ref={sections.disclaimer}
+          className="relative min-h-screen flex flex-col justify-center items-center px-4 py-12"
+        >
+          <div className="max-w-xl mx-auto text-center space-y-8">
+            <div className="space-y-6">
+              <h2 className="text-4xl sm:text-5xl font-bold text-white border-b border-white/30 pb-4 inline-block">
+                Disclaimer
+              </h2>
+
+              <div className="bg-purple-500/10 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-purple-500/20">
+                <p className="text-purple-300 text-sm sm:text-base leading-relaxed font-light">
+                  This website is provided solely for educational and
+                  informational purposes. I do not support, promote, or
+                  encourage cross-trading in Sofi, Karuta, Mazoku, or any other
+                  Discord bot, game, or platform where such activities are
+                  prohibited by its official or unofficial rules, guidelines, or
+                  community standards. Any actions you choose to take, including
+                  cross-trading or related activities, are entirely your own
+                  responsibility. I am not affiliated with these bots or their
+                  developers and accept no responsibility or liability for any
+                  consequences, including warnings, restrictions, suspensions,
+                  or bans, resulting from the use of this website or your
+                  actions.
+                </p>
+              </div>
+
+              <PromotedServers />
             </div>
           </div>
 
@@ -223,49 +222,6 @@ export default function Home() {
               <p className="text-white/50 text-sm mt-2">
                 Full explanation of all calculators and how to use them
               </p>
-            </div>
-          </div>
-
-          <NavButton
-            onClick={() => scrollToSection(sections.disclaimer)}
-            direction="down"
-          />
-        </section>
-
-        {/* Disclaimer Section */}
-        <section
-          ref={sections.disclaimer}
-          className="relative min-h-screen flex flex-col justify-center items-center px-4 py-12"
-        >
-          <div className="max-w-4xl mx-auto text-center space-y-8">
-            <div className="space-y-6">
-              <h2 className="text-4xl sm:text-5xl font-bold text-white border-b border-white/30 pb-4 inline-block">
-                Disclaimer
-              </h2>
-
-              <div className="bg-purple-500/10 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-purple-500/20">
-                <p className="text-purple-300 text-sm sm:text-base leading-relaxed font-light">
-                  This website is intended solely for educational purposes. I do
-                  not support or encourage cross-trading in Sofi, Karuta, or
-                  Mazoku, as it is against the rules. Any actions you take
-                  within these games, including cross-trading or related
-                  activities, are your responsibility. I am not accountable for
-                  any outcomes or issues that may arise from engaging in this
-                  playstyle.
-                </p>
-              </div>
-
-              <div className="space-y-4">
-                <h3 className="text-white/80 text-lg sm:text-xl font-light flex items-center justify-center gap-2">
-                  Discord Servers you can join!
-                </h3>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-w-2xl mx-auto pb-14">
-                  {discordLinks.map((link) => (
-                    <DiscordLink key={link.href} {...link} />
-                  ))}
-                </div>
-              </div>
             </div>
           </div>
 
